@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plug Play Tech - Premium Tech Hub in Malawi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Georgia&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        /* Enhanced Color Variables with Malawi Flag Accents */
+        :root {
+            --primary: #2563eb;       /* Vibrant blue */
+            --primary-dark: #1e40af;  /* Deep blue */
+            --secondary: #f59e0b;     /* Amber accent */
+            --light: #f8fafc;         /* Light background */
+            --dark: #1e293b;          /* Dark text */
+            --success: #10b981;       /* Emerald green */
+            --danger: #ef4444;        /* Coral red */
+            --malawi-red: #ce1126;    /* Malawi flag red */ 
+            --malawi-green: #339e35;  /* Malawi flag green */
+            --malawi-black: #000000;  /* Malawi flag black */
+        }
+        [v-cloak] { display: none; }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f9fafb;
+            color: #374151;
+            scroll-behavior: smooth;
+        }
+       .font-sans { font-family: 'Poppins', sans-serif; }
+
+       .section-title { position: relative; display: inline-block; padding-bottom: 10px; }
+       .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: var(--primary); border-radius: 2px; }
+       .testimonial-card { border-left: 4px solid var(--primary); }
+       .fade-enter-active,.fade-leave-active { transition: opacity 0.3s ease; }
+       .fade-enter-from,.fade-leave-to { opacity: 0; }
+       .lazy-img { opacity: 0; transition: opacity 0.5s ease-in-out; }
+       .lazy-img.loaded { opacity: 1; }
+       .cart-badge { top: -8px; right: -8px; }
+       .specifications-list { max-height: 300px; overflow-y: auto; padding-right: 10px; }
+       .specifications-list::-webkit-scrollbar { width: 8px; }
+       .specifications-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+       .specifications-list::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+       .specifications-list::-webkit-scrollbar-thumb:hover { background: #555; }
+       .product-card { transition: all 0.3s ease; border: 1px solid #e5e7eb; }
+       .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+       .star-rating .fa-star { color: #f59e0b; }
+       .comparison-modal-content table { width: 100%; border-collapse: collapse; }
+       .comparison-modal-content th,.comparison-modal-content td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+       .comparison-modal-content th { background-color: #f2f2f2; }
+       .favorite-btn.favorited { color: #ef4444; }
+       .color-swatch { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s; }
+       .color-swatch.selected { border-color: var(--primary); }
+       .image-thumbnail { transition: all 0.2s; border: 2px solid transparent; }
+       .image-thumbnail.active,.image-thumbnail:hover { border-color: var(--primary); transform: scale(1.05); }
+       .account-form { max-width: 500px; margin: 0 auto; }
+       .cart-item { transition: background-color 0.2s; }
+       .cart-item:hover { background-color: #f8fafc; }
+       .checkout-steps .step { flex: 1; position: relative; text-align: center; }
+       .checkout-steps .step:not(:last-child):after { content: ''; position: absolute; top: 20px; right: -50%; width: 100%; height: 2px; background: #d1d5db; z-index: 0; }
+       .checkout-steps .step.active .step-icon { background: var(--primary); color: white; border-color: var(--primary); }
+       .step-icon { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #d1d5db; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; background: white; position: relative; z-index: 1; }
+       .order-summary { background: #f9fafb; border-radius: 10px; }
+       .payment-option { border: 2px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+       .payment-option.selected { border-color: var(--primary); background-color: #eff6ff; }
+       .product-detail-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        @media (min-width: 1024px) {
+           .product-detail-grid { grid-template-columns: 1fr 1fr; }
+        }
+       .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA==&auto=format&fit=crop&w=1740&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        /* Swiper Custom Navigation Styles */
+       .swiper-button-prev,.swiper-button-next {
+            color: var(--primary);
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+       .swiper-button-prev:hover,.swiper-button-next:hover {
+            background-color: white;
+            color: var(--primary-dark);
+            transform: scale(1.1);
+        }
+       .swiper-button-prev::after,.swiper-button-next::after {
+            font-size: 1.5rem;
+            font-weight: 900;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="app" class="min-h-screen flex flex-col" v-cloak>
+        <!-- Top Announcement Bar -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white text-center py-2 text-sm font-sans">
+            <p>🔥 AI-Powered Personalization! Login to see recommendations just for you!</p>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="sticky top-0 bg-white shadow-md z-40">
+             <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+                 <div class="flex items-center">
+                     <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden mr-3 text-gray-700">
+                         <i class="fas fa-bars text-xl"></i>
+                     </button>
+                     <div class="text-2xl font-bold text-blue-600 cursor-pointer flex items-center" @click="goHome">
+                        
+                         Plug Play Tech
+                     </div>
+                 </div>
+
+                <div class="hidden md:flex space-x-6 items-center font-sans">
+                     <a href="#" @click.prevent="goHome" class="text-gray-700 hover:text-blue-600">Home</a>
+                     <a href="#" @click.prevent="setCategory('Apple Products')" class="text-gray-700 hover:text-blue-600">Apple</a>
+                     <a href="#" @click.prevent="setCategory('Samsung Products')" class="text-gray-700 hover:text-blue-600">Samsung</a>
+                     <a href="#" @click.prevent="setCategory('Other Smartphones')" class="text-gray-700 hover:text-blue-600">Other Brands</a>
+                     <a href="#" @click.prevent="setCategory('Laptops')" class="text-gray-700 hover:text-blue-600">Laptops</a>
+                     <a href="#" @click.prevent="setCategory('Gaming Consoles')" class="text-gray-700 hover:text-blue-600">Gaming</a>
+                     <a href="#" @click.prevent="setCategory('Accessories')" class="text-gray-700 hover:text-blue-600">Accessories</a>
+                     <a href="#" @click.prevent="currentPage = 'reviews'" class="text-gray-700 hover:text-blue-600">Reviews</a>
+                      <a href="#" @click.prevent="currentPage = 'account'" class="text-gray-700 hover:text-blue-600"><i class="fas fa-user mr-1"></i>My Account</a>
+                 </div>
+
+                <div class="flex items-center space-x-6">
+                     <form @submit.prevent="intelligentSearch" class="relative hidden md:block">
+                         <input type="text" v-model="searchQuery" placeholder="Search products..."
+                                  class="px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 w-56 transition-all font-sans">
+                         <button type="submit" class="absolute right-3 top-3 text-gray-400 hover:text-blue-600">
+                             <i v-if="searchLoading" class="fas fa-spinner fa-spin"></i>
+                             <i v-else class="fas fa-search"></i>
+                         </button>
+                     </form>
+                     <div class="relative">
+                         <span v-if="cartItemCount > 0" class="absolute cart-badge bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-sans">{{ cartItemCount }}</span>
+                         <button @click="currentPage = 'cart'" class="text-gray-700 hover:text-blue-600 relative">
+                             <i class="fas fa-shopping-cart text-xl"></i>
+                         </button>
+                     </div>
+                 </div>
+             </div>
+
+            <div v-if="mobileMenuOpen" class="md:hidden bg-white py-4 px-4 shadow-lg font-sans">
+                 <div class="grid grid-cols-2 gap-4">
+                      <a href="#" @click.prevent="setCategory(cat)" v-for="cat in ['Apple Products', 'Samsung Products', 'Other Smartphones', 'Laptops', 'Gaming Consoles', 'Accessories']" :key="cat" class="block py-2 px-4 rounded hover:bg-blue-50 text-center">{{ cat.split(' ')[0] }}</a>
+                     <a href="#" @click.prevent="currentPage = 'reviews'; mobileMenuOpen = false" class="block py-2 px-4 rounded hover:bg-blue-50 text-center">Reviews</a>
+                     <a href="#" @click.prevent="currentPage = 'account'; mobileMenuOpen = false" class="block py-2 px-4 rounded hover:bg-blue-50 text-center">My Account</a>
+                     <a href="#" @click.prevent="goHome" class="block py-2 px-4 rounded hover:bg-blue-50 text-center">Home</a>
+                 </div>
+             </div>
+        </nav>
+        <main class="flex-1">
+            <!-- Loading Spinner -->
+            <div v-if="appLoading" class="fixed inset-0 bg-white flex items-center justify-center z-50">
+                <div class="text-center">
+                    <i class="fas fa-spinner fa-spin text-blue-500 text-5xl mb-4"></i>
+                    <p class="text-xl font-semibold text-gray-700 font-sans">Initializing Store...</p>
+                </div>
+            </div>
+
+            <!-- Comparison Bar -->
+            <div v-if="selectedForComparison.length > 1" class="sticky top-[70px] bg-blue-800 text-white p-3 shadow-lg z-30 flex items-center justify-between font-sans">
+                <span>{{ selectedForComparison.length }} items selected for comparison.</span>
+                <button @click="compareProducts" :disabled="isComparing" class="bg-yellow-500 text-blue-900 font-bold px-4 py-2 rounded hover:bg-yellow-400 disabled:opacity-50 flex items-center">
+                    <i v-if="isComparing" class="fas fa-spinner fa-spin mr-2"></i>
+                    Compare Selected
+                </button>
+            </div>
+
+            <!-- Comparison Modal -->
+            <div v-if="showComparisonModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+                 <div class="bg-white rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+                     <div class="flex justify-between items-center p-4 border-b">
+                         <h2 class="text-2xl font-bold">Product Comparison</h2>
+                         <button @click="showComparisonModal = false" class="text-2xl hover:text-red-500">&times;</button>
+                     </div>
+                     <div class="p-6 overflow-y-auto comparison-modal-content" v-html="comparisonResult"></div>
+                 </div>
+            </div>
+            <!-- Page Content -->
+            <transition name="fade" mode="out-in">
+                 <div :key="currentPage">
+                     <!-- Home Page -->
+                     <div v-if="currentPage === 'home'" class="space-y-16 pt-8 pb-16">
+                         <div class="hero-bg text-white py-16 md:py-24">
+                             <div class="container mx-auto px-4 text-center">
+                                 <h1 class="text-4xl md:text-5xl font-bold mb-4">Affordable Tech for Malawi's Future</h1>
+                                 <p class="text-lg mb-8 max-w-2xl mx-auto font-sans">Quality new and refurbished devices for students and young professionals. Free delivery in Blantyre & Lilongwe!</p>
+                                 <button @click="setCategory('')" class="bg-white text-blue-600 px-8 py-3 rounded-lg hover:bg-gray-100 transition font-semibold text-lg shadow-lg transform hover:scale-105 font-sans">
+                                     Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                                 </button>
+                             </div>
+                         </div>
+
+                        <div v-if="userId && recommendedProducts.length > 0" class="container mx-auto px-4">
+                              <h2 class="text-3xl font-bold mb-8 text-gray-800 text-center section-title">Recommended For You</h2>
+                              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                                   <div v-for="product in recommendedProducts" :key="product.id" class="bg-white border rounded-lg p-6 shadow hover:shadow-lg transition transform hover:-translate-y-1 relative product-card flex flex-col">
+                                        <button @click.stop="toggleFavorite(product.id)" class="absolute top-4 left-4 z-20 text-xl text-gray-400 hover:text-red-500 favorite-btn" :class="{ 'favorited': isFavorite(product.id) }">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                        <div v-if="getMaxStock(product) === 0" class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">Out of Stock</div>
+                                        <div v-else class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">In Stock</div>
+                                        <img :data-src="optimizeImage(product.images[0], 400)" :alt="product.name" class="w-full h-56 object-contain mb-6 lazy-img" :onerror="`this.onerror=null;this.src='https://placehold.co/400x400/e2e8f0/e2e8f0?text=Image+Not+Found';`">
+                                        <h3 class="text-xl font-bold text-gray-800 mb-2">{{ product.name }}</h3>
+                                        <p class="text-gray-600 text-sm mb-4 font-sans">{{ product.brand }}</p>
+                                        <div class="mb-4 mt-auto"><span class="text-blue-600 font-bold text-lg">From MWK {{ calculateLocalizedPrice(getMinPrice(product)).toLocaleString() }}</span></div>
+                                        <button @click="viewProduct(product)" class="mt-2 w-full bg-blue-600 text-white px-4 py-3 rounded hover:bg-blue-700 transition flex items-center justify-center font-semibold font-sans">View Details <i class="fas fa-chevron-right ml-2 text-xs"></i></button>
+                                   </div>
+                              </div>
+                         </div>
+
+                        <div class="container mx-auto px-4">
+                             <h2 class="text-3xl font-bold mb-8 text-gray-800 text-center section-title">Popular Categories</h2>
+                              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                                  <div @click="setCategory('Apple Products')" class="bg-white rounded-lg p-6 text-center cursor-pointer shadow hover:shadow-lg transition transform hover:-translate-y-1"><i class="fab fa-apple text-4xl text-gray-700 mb-4"></i><p class="font-semibold text-lg">Apple</p></div>
+                                  <div @click="setCategory('Samsung Products')" class="bg-white rounded-lg p-6 text-center cursor-pointer shadow hover:shadow-lg transition transform hover:-translate-y-1"><i class="fas fa-mobile-alt text-4xl text-gray-700 mb-4"></i><p class="font-semibold text-lg">Samsung</p></div>
+                                  <div @click="setCategory('Laptops')" class="bg-white rounded-lg p-6 text-center cursor-pointer shadow hover:shadow-lg transition transform hover:-translate-y-1"><i class="fas fa-laptop text-4xl text-gray-700 mb-4"></i><p class="font-semibold text-lg">Laptops</p></div>
+                                  <div @click="setCategory('Gaming Consoles')" class="bg-white rounded-lg p-6 text-center cursor-pointer shadow hover:shadow-lg transition transform hover:-translate-y-1"><i class="fas fa-gamepad text-4xl text-gray-700 mb-4"></i><p class="font-semibold text-lg">Gaming</p></div>
+                                  <div @click="setCategory('Accessories')" class="bg-white rounded-lg p-6 text-center cursor-pointer shadow hover:shadow-lg transition transform hover:-translate-y-1"><i class="fas fa-headphones text-4xl text-gray-700 mb-4"></i><p class="font-semibold text-lg">Accessories</p></div>
+                              </div>
+                         </div>
+
+                        <div class="container mx-auto px-4">
+                             <div class="flex justify-between items-center mb-8">
+                                 <h2 class="text-3xl font-bold text-gray-800 section-title">Featured Products</h2>
+                                 <button @click="setCategory('')" class="text-blue-600 hover:underline font-medium font-sans">View All Products</button>
+                             </div>
+                              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                                   <div v-for="product in featuredProducts" :key="product.id" class="bg-white border rounded-lg p-6 shadow hover:shadow-lg transition transform hover:-translate-y-1 relative product-card">
+                                        <div v-if="getMaxStock(product) === 0" class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">Out of Stock</div>
+                                        <div v-else class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">In Stock</div>
+                                        <img :data-src="optimizeImage(product.images[0], 400)" :alt="product.name" class="w-full h-56 object-contain mb-6 lazy-img" :onerror="`this.onerror=null;this.src='https://placehold.co/400x400/e2e8f0/e2e8f0?text=Image+Not+Found';`">
+                                        <h3 class="text-xl font-bold text-gray-800 mb-2">{{ product.name }}</h3>
+                                        <p class="text-gray-600 text-sm mb-4 font-sans">{{ product.brand }}</p>
+                                        <div class="mb-4"><span class="text-blue-600 font-bold text-lg">From MWK {{ calculateLocalizedPrice(getMinPrice(product)).toLocaleString() }}</span></div>
+                                        <button @click="viewProduct(product)" class="mt-2 w-full bg-blue-600 text-white px-4 py-3 rounded hover:bg-blue-700 transition flex items-center justify-center font-semibold font-sans">View Details <i class="fas fa-chevron-right ml-2 text-xs"></i></button>
+                                   </div>
+                              </div>
+                         </div>
+                     </div>
+
+                    <!-- Product List Page -->
+                     <div v-if="currentPage === 'productList'" class="container mx-auto px-4 py-12">
+                         <div class="flex flex-col md:flex-row justify-between items-start mb-8">
+                             <div>
+                                 <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ selectedCategory || (searchQuery ? `Search Results for "${searchQuery}"` : 'All Products') }}</h1>
+                                 <p class="text-gray-600 font-sans">{{ filteredProducts.length }} products available</p>
+                             </div>
+                             <div class="flex items-center mt-4 md:mt-0">
+                                 <button @click="clearFilters" class="text-blue-600 hover:underline font-medium font-sans mr-4">Clear Filters</button>
+                                 <div class="relative">
+                                     <select v-model="sortOption" class="appearance-none bg-white border border-gray-300 rounded px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-600 font-sans">
+                                         <option value="price-asc">Price: Low to High</option>
+                                         <option value="price-desc">Price: High to Low</option>
+                                         <option value="name-asc">Name: A to Z</option>
+                                         <option value="name-desc">Name: Z to A</option>
+                                     </select>
+                                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                         <i class="fas fa-chevron-down"></i>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+
+                        <div class="flex flex-col md:flex-row gap-8">
+                             <div class="w-full md:w-64 flex-shrink-0">
+                                 <div class="bg-white p-6 rounded-lg shadow sticky top-24">
+                                     <h3 class="text-lg font-bold mb-4">Filters</h3>
+
+                                     <div class="mb-6">
+                                         <h4 class="font-semibold mb-2">Brand</h4>
+                                         <div class="space-y-2">
+                                             <div v-for="brand in brands" :key="brand" class="flex items-center">
+                                                 <input type="checkbox" :id="'brand-'+brand" :value="brand" v-model="selectedBrands" class="mr-2">
+                                                 <label :for="'brand-'+brand" class="font-sans">{{ brand }}</label>
+                                             </div>
+                                         </div>
+                                     </div>
+
+                                     <div class="mb-6">
+                                         <h4 class="font-semibold mb-2">Condition</h4>
+                                         <div class="space-y-2">
+                                             <div v-for="condition in conditions" :key="condition" class="flex items-center">
+                                                 <input type="checkbox" :id="'condition-'+condition" :value="condition" v-model="selectedConditions" class="mr-2">
+                                                 <label :for="'condition-'+condition" class="font-sans">{{ condition }}</label>
+                                             </div>
+                                         </div>
+                                     </div>
+
+                                     <div class="mb-6">
+                                         <h4 class="font-semibold mb-2">Price Range (USD Base)</h4>
+                                         <div class="space-y-4">
+                                             <div>
+                                                 <div class="flex justify-between text-sm text-gray-600 font-sans">
+                                                     <span>${{ priceRange.min.toLocaleString() }}</span>
+                                                     <span>${{ priceRange.max.toLocaleString() }}</span>
+                                                 </div>
+                                                 <input type="range" min="0" :max="maxProductPrice" step="50" v-model.number="priceRange.min" class="w-full">
+                                                 <input type="range" min="0" :max="maxProductPrice" step="50" v-model.number="priceRange.max" class="w-full">
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+
+                            <div class="flex-1">
+                                 <div v-if="filteredProducts.length === 0 && !searchLoading" class="bg-white rounded-lg p-12 text-center">
+                                     <i class="fas fa-search text-5xl text-gray-300 mb-6"></i>
+                                     <h3 class="text-2xl font-bold text-gray-700 mb-2">No products found</h3>
+                                     <p class="text-gray-600 mb-6 font-sans">Try adjusting your filters or search term</p>
+                                     <button @click="clearFilters" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition font-semibold font-sans">Clear All Filters</button>
+                                 </div>
+
+                                <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                     <div v-for="product in filteredProducts" :key="product.id" class="bg-white border rounded-lg p-6 shadow hover:shadow-lg transition transform hover:-translate-y-1 relative product-card">
+                                         <button @click.stop="toggleFavorite(product.id)" class="absolute top-4 left-4 z-20 text-xl text-gray-400 hover:text-red-500 favorite-btn" :class="{ 'favorited': isFavorite(product.id) }">
+                                             <i class="fas fa-heart"></i>
+                                         </button>
+                                         <div v-if="getMaxStock(product) === 0" class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">Out of Stock</div>
+                                         <div v-else class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">In Stock</div>
+
+                                         <div class="flex items-center mb-4">
+                                             <input type="checkbox" v-model="selectedForComparison" :value="product.id" class="mr-2">
+                                             <span class="text-sm text-gray-600 font-sans">Compare</span>
+                                         </div>
+
+                                         <img :data-src="optimizeImage(product.images[0], 400)" :alt="product.name" class="w-full h-56 object-contain mb-6 lazy-img" :onerror="`this.onerror=null;this.src='https://placehold.co/400x400/e2e8f0/e2e8f0?text=Image+Not+Found';`">
+                                         <h3 class="text-xl font-bold text-gray-800 mb-2">{{ product.name }}</h3>
+                                         <p class="text-gray-600 text-sm mb-4 font-sans">{{ product.brand }}</p>
+                                         <div class="mb-4">
+                                             <span class="text-blue-600 font-bold text-lg">From MWK {{ calculateLocalizedPrice(getMinPrice(product)).toLocaleString() }}</span>
+                                         </div>
+                                         <button @click="viewProduct(product)" class="mt-2 w-full bg-blue-600 text-white px-4 py-3 rounded hover:bg-blue-700 transition flex items-center justify-center font-semibold font-sans">View Details <i class="fas fa-chevron-right ml-2 text-xs"></i></button>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                    <!-- Product Detail Page -->
+                     <div v-if="currentPage === 'productDetail' && selectedProduct" class="container mx-auto px-4 py-12">
+                         <div class="flex items-center text-gray-600 mb-6 font-sans">
+                             <a href="#" @click.prevent="goHome" class="text-blue-600 hover:underline">Home</a>
+                             <span class="mx-2">/</span>
+                             <a href="#" @click.prevent="setCategory(selectedProduct.category)" class="text-blue-600 hover:underline">{{ selectedProduct.category }}</a>
+                             <span class="mx-2">/</span>
+                             <span>{{ selectedProduct.name }}</span>
+                         </div>
+
+                        <div class="product-detail-grid">
+                             <div>
+                                 <div class="relative">
+                                     <div class="swiper-container overflow-hidden rounded-xl bg-gray-50 p-4">
+                                         <div class="swiper-wrapper">
+                                             <div v-for="(image, index) in selectedProduct.images"
+                                                   :key="index"
+                                                   class="swiper-slide flex items-center justify-center">
+                                                 <img :data-src="optimizeImage(image, 600)"
+                                                       :alt="`${selectedProduct.name} - Image ${index+1}`"
+                                                      class="max-h-[400px] object-contain lazy-img"
+                                                      :onerror="`this.onerror=null;this.src='https://placehold.co/600x600/e2e8f0/e2e8f0?text=Image+Not+Found';`">
+                                             </div>
+                                         </div>
+                                         <div class="swiper-button-prev"></div>
+                                         <div class="swiper-button-next"></div>
+                                     </div>
+
+                                     <div class="mt-4 grid grid-cols-4 gap-2">
+                                         <div v-for="(image, index) in selectedProduct.images"
+                                              :key="'thumb-'+index"
+                                              @click="swiper && swiper.slideToLoop(index)"
+                                              class="cursor-pointer border-2 rounded-lg p-1 flex items-center justify-center"
+                                              :class="{'border-blue-500': activeImageIndex === index}">
+                                             <img :src="optimizeImage(image, 100)"
+                                                   :alt="`Thumbnail ${index+1}`"
+                                                   class="h-20 w-full object-contain"
+                                                  :onerror="`this.onerror=null;this.src='https://placehold.co/100x100/e2e8f0/e2e8f0?text=Thumb';`">
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+
+                            <div>
+                                 <div class="bg-white rounded-xl p-6 shadow">
+                                     <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ selectedProduct.name }}</h1>
+                                     <div class="flex items-center mb-4">
+                                         <div class="star-rating flex mr-4">
+                                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                         </div>
+                                         <span class="text-gray-600 font-sans">4.7 (128 reviews)</span>
+                                     </div>
+
+                                     <div class="mb-6">
+                                         <span class="text-2xl font-bold text-blue-600">From MWK {{ calculateLocalizedPrice(getMinPrice(selectedProduct)).toLocaleString() }}</span>
+                                         <span v-if="selectedProduct.originalPrice" class="ml-2 text-gray-500 line-through">MWK {{ calculateLocalizedPrice(selectedProduct.originalPrice).toLocaleString() }}</span>
+                                     </div>
+
+                                     <p class="text-gray-700 mb-6">{{ selectedProduct.description }}</p>
+
+                                     <div v-if="selectedProduct.colors && selectedProduct.colors.length > 0" class="mb-6">
+                                         <h3 class="font-bold mb-3">Color</h3>
+                                         <div class="flex space-x-3">
+                                             <div v-for="color in selectedProduct.colors" :key="color"
+                                                   @click="selectedColor = color"
+                                                  class="color-swatch"
+                                                  :class="{ 'selected': selectedColor === color }"
+                                                  :style="{ backgroundColor: color }"
+                                                  :title="color"></div>
+                                         </div>
+                                     </div>
+
+                                     <div class="border-t border-b py-6 mb-6">
+                                         <div class="flex flex-wrap gap-4 mb-4">
+                                             <div class="flex items-center">
+                                                 <i class="fas fa-shipping-fast text-blue-600 text-xl mr-2"></i>
+                                                 <div>
+                                                     <h4 class="font-semibold">Free Delivery</h4>
+                                                     <p class="text-sm text-gray-600 font-sans">Blantyre & Lilongwe</p>
+                                                 </div>
+                                             </div>
+                                             <div class="flex items-center">
+                                                 <i class="fas fa-undo text-blue-600 text-xl mr-2"></i>
+                                                 <div>
+                                                     <h4 class="font-semibold">14-Day Returns</h4>
+                                                     <p class="text-sm text-gray-600 font-sans">No questions asked</p>
+                                                 </div>
+                                             </div>
+                                             <div class="flex items-center">
+                                                 <i class="fas fa-shield-alt text-blue-600 text-xl mr-2"></i>
+                                                 <div>
+                                                     <h4 class="font-semibold">1 Year Warranty</h4>
+                                                     <p class="text-sm text-gray-600 font-sans">Coverage included</p>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+
+                                     <div class="mb-6">
+                                         <h3 class="font-bold mb-3">Select Condition & Storage</h3>
+                                         <div class="space-y-3">
+                                             <div v-for="item in selectedProduct.inventory" :key="item.id" class="flex items-center justify-between border border-gray-200 rounded-lg p-4">
+                                                 <div>
+                                                     <h4 class="font-semibold">{{ item.condition }}<span v-if="item.storage !== 'N/A'"> - {{ item.storage }}</span></h4>
+                                                     <p class="text-sm text-gray-600 font-sans">Stock: {{ item.stock }} available</p>
+                                                 </div>
+                                                 <div class="text-right">
+                                                     <div class="text-lg font-bold">MWK {{ calculateLocalizedPrice(item.price).toLocaleString() }}</div>
+                                                     <button @click="addToCart(item)" :disabled="item.stock === 0" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 font-sans">
+                                                         <i v-if="item.isAdding" class="fas fa-spinner fa-spin"></i>
+                                                         <span v-else>Add to Cart</span>
+                                                     </button>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+
+                                     <div class="flex space-x-3">
+                                         <button @click="toggleFavorite(selectedProduct.id)" class="flex-1 border border-gray-300 rounded-lg py-3 font-sans flex items-center justify-center"
+                                                 :class="{ 'text-red-500 border-red-500': isFavorite(selectedProduct.id) }">
+                                             <i class="fas fa-heart mr-2"></i>
+                                             {{ isFavorite(selectedProduct.id) ? 'Saved' : 'Save for Later' }}
+                                         </button>
+                                         <button @click="currentPage = 'cart'" class="flex-1 bg-green-600 text-white rounded-lg py-3 font-sans flex items-center justify-center">
+                                             <i class="fas fa-shopping-cart mr-2"></i>
+                                             Buy Now
+                                         </button>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+
+                        <div class="mt-12 bg-white rounded-xl shadow">
+                             <div class="border-b">
+                                 <nav class="flex">
+                                     <button @click="activeTab = 'specs'" class="px-6 py-4 font-medium" :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'specs' }">Specifications</button>
+                                     <button @click="activeTab = 'reviews'; !aiReviewSummary && summarizeReviews(selectedProduct)" class="px-6 py-4 font-medium" :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'reviews' }">Reviews</button>
+                                     <button @click="activeTab = 'qa'" class="px-6 py-4 font-medium" :class="{ 'text-blue-600 border-b-2 border-blue-600': activeTab === 'qa' }">Q&A</button>
+                                 </nav>
+                             </div>
+
+                            <div class="p-6">
+                                 <div v-if="activeTab === 'specs'">
+                                     <div class="specifications-list">
+                                         <table class="w-full">
+                                             <tbody>
+                                                 <tr v-for="(value, key) in selectedProduct.specifications" :key="key" class="border-b">
+                                                     <td class="py-3 font-semibold w-1/3">{{ key }}</td>
+                                                     <td class="py-3">{{ value }}</td>
+                                                 </tr>
+                                             </tbody>
+                                         </table>
+                                     </div>
+                                 </div>
+
+                                <div v-if="activeTab === 'reviews'">
+                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                         <div class="md:col-span-2">
+                                             <div class="bg-blue-50 rounded-lg p-6 mb-8">
+                                                 <div class="flex items-center mb-4">
+                                                     <i class="fas fa-robot text-blue-600 text-xl mr-2"></i>
+                                                     <h3 class="font-bold">AI Review Summary</h3>
+                                                 </div>
+                                                 <div v-if="isSummarizing" class="text-center py-6">
+                                                     <i class="fas fa-spinner fa-spin text-blue-600 text-xl mr-2"></i>
+                                                     <span>Analyzing customer reviews...</span>
+                                                 </div>
+                                                 <div v-else v-html="aiReviewSummary"></div>
+                                             </div>
+
+                                            <h3 class="font-bold mb-4">Customer Reviews</h3>
+                                             <div class="space-y-6">
+                                                 <div v-for="review in productReviews" :key="review.id" class="testimonial-card bg-white p-6 rounded-lg shadow">
+                                                     <div class="flex items-center mb-3">
+                                                         <div class="star-rating flex mr-3">
+                                                             <i v-for="i in 5" :key="i" class="fas fa-star" :class="{ 'text-gray-300': i > review.rating }"></i>
+                                                         </div>
+                                                         <span class="font-bold">{{ review.name }}</span>
+                                                     </div>
+                                                     <p class="text-gray-700 mb-2">{{ review.text }}</p>
+                                                     <p class="text-sm text-gray-500 font-sans">Reviewed on {{ review.date }}</p>
+                                                 </div>
+                                             </div>
+                                         </div>
+
+                                        <div>
+                                             <div class="bg-white border rounded-lg p-6 shadow">
+                                                 <h3 class="font-bold mb-4">Add Your Review</h3>
+                                                 <div class="mb-4">
+                                                     <label class="block text-gray-700 mb-2 font-sans">Rating</label>
+                                                     <div class="flex">
+                                                         <i v-for="i in 5" :key="i" @click="newReview.rating = i" :class="['fas text-xl mr-1 cursor-pointer', i <= newReview.rating ? 'fa-star text-yellow-400' : 'fa-star text-gray-300']"></i>
+                                                     </div>
+                                                 </div>
+                                                 <div class="mb-4">
+                                                     <label class="block text-gray-700 mb-2 font-sans">Name</label>
+                                                     <input type="text" v-model="newReview.name" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                                 </div>
+                                                 <div class="mb-4">
+                                                     <label class="block text-gray-700 mb-2 font-sans">Review</label>
+                                                     <textarea v-model="newReview.text" rows="4" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+                                                 </div>
+                                                 <button @click="submitReview" class="w-full bg-blue-600 text-white py-3 rounded font-sans hover:bg-blue-700">Submit Review</button>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+
+                                <div v-if="activeTab === 'qa'">
+                                     <div class="space-y-6">
+                                         <div v-for="(qa, index) in productQAs" :key="index" class="border-b pb-6 last:border-0">
+                                             <div class="flex items-start mb-2">
+                                                 <div class="bg-gray-100 rounded-full h-10 w-10 flex items-center justify-center mr-3 flex-shrink-0">
+                                                     <i class="fas fa-question text-blue-600"></i>
+                                                 </div>
+                                                 <div>
+                                                     <h4 class="font-bold">{{ qa.question }}</h4>
+                                                     <p class="text-sm text-gray-600 font-sans">Asked by {{ qa.asker }} on {{ qa.date }}</p>
+                                                 </div>
+                                             </div>
+                                             <div class="flex items-start mt-4 ml-3 pl-10">
+                                                 <div class="bg-blue-50 rounded-full h-10 w-10 flex items-center justify-center mr-3 flex-shrink-0">
+                                                     <i class="fas fa-reply text-blue-600"></i>
+                                                 </div>
+                                                 <div>
+                                                     <p class="text-gray-700">{{ qa.answer }}</p>
+                                                     <p class="text-sm text-gray-600 font-sans">Answered by Plug Play Tech Support</p>
+                                                 </div>
+                                             </div>
+                                         </div>
+
+                                        <div class="mt-10">
+                                             <h3 class="font-bold mb-4">Ask a Question</h3>
+                                             <div class="mb-4">
+                                                 <label class="block text-gray-700 mb-2 font-sans">Your Name</label>
+                                                 <input type="text" v-model="newQuestion.name" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                             </div>
+                                             <div class="mb-4">
+                                                 <label class="block text-gray-700 mb-2 font-sans">Your Question</label>
+                                                 <textarea v-model="newQuestion.text" rows="3" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+                                             </div>
+                                             <button @click="submitQuestion" class="bg-blue-600 text-white py-2 px-6 rounded font-sans hover:bg-blue-700">Ask Question</button>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                    <!-- Cart Page -->
+                     <div v-if="currentPage === 'cart'" class="container mx-auto px-4 py-12">
+                         <h1 class="text-3xl font-bold text-gray-800 mb-8">Your Shopping Cart</h1>
+
+                        <div v-if="cart.length === 0" class="bg-white rounded-xl shadow p-12 text-center">
+                             <i class="fas fa-shopping-cart text-5xl text-gray-300 mb-6"></i>
+                             <h3 class="text-2xl font-bold text-gray-700 mb-2">Your cart is empty</h3>
+                             <p class="text-gray-600 mb-6 font-sans">Looks like you haven't added anything to your cart yet</p>
+                             <button @click="goHome" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition font-semibold font-sans">Continue Shopping</button>
+                         </div>
+
+                        <div v-else class="flex flex-col lg:flex-row gap-8">
+                             <div class="flex-1">
+                                 <div class="bg-white rounded-xl shadow overflow-hidden">
+                                     <div class="border-b">
+                                         <div class="grid grid-cols-12 gap-4 p-4 font-semibold text-gray-700 font-sans">
+                                             <div class="col-span-6">Product</div>
+                                             <div class="col-span-2 text-center">Price</div>
+                                             <div class="col-span-2 text-center">Quantity</div>
+                                             <div class="col-span-2 text-center">Total</div>
+                                         </div>
+                                     </div>
+
+                                     <div class="divide-y">
+                                         <div v-for="item in cart" :key="item.id" class="cart-item grid grid-cols-12 gap-4 p-4 items-center">
+                                             <div class="col-span-6 flex items-center">
+                                                 <img :src="optimizeImage(getProductImage(item.productId), 100)" :alt="item.name" class="w-16 h-16 object-contain mr-4" :onerror="`this.onerror=null;this.src='https://placehold.co/100x100/e2e8f0/e2e8f0?text=Img';`">
+                                                 <div>
+                                                     <h4 class="font-bold">{{ item.name }}</h4>
+                                                     <p class="text-sm text-gray-600 font-sans">{{ item.condition }}<span v-if="item.storage !== 'N/A'"> - {{ item.storage }}</span></p>
+                                                 </div>
+                                             </div>
+                                             <div class="col-span-2 flex items-center justify-center font-sans">MWK {{ calculateLocalizedPrice(item.price).toLocaleString() }}</div>
+                                             <div class="col-span-2 flex items-center justify-center">
+                                                 <div class="flex items-center border rounded">
+                                                     <button @click="updateQuantity(item, item.quantity - 1)" class="px-3 py-1 text-gray-600 hover:bg-gray-100">
+                                                         <i class="fas fa-minus"></i>
+                                                     </button>
+                                                     <input type="number" v-model.number="item.quantity" min="1" :max="getInventoryStock(item.inventoryId)" @change="updateQuantity(item, item.quantity)" class="w-12 text-center py-1 focus:outline-none">
+                                                     <button @click="updateQuantity(item, item.quantity + 1)" class="px-3 py-1 text-gray-600 hover:bg-gray-100">
+                                                         <i class="fas fa-plus"></i>
+                                                     </button>
+                                                 </div>
+                                             </div>
+                                             <div class="col-span-2 flex items-center justify-center font-sans font-bold">MWK {{ calculateLocalizedPrice(item.price * item.quantity).toLocaleString() }}</div>
+                                         </div>
+                                     </div>
+
+                                     <div class="border-t p-4 flex justify-between items-center">
+                                         <div class="flex items-center">
+                                             <input type="text" v-model="couponCode" placeholder="Coupon code" class="px-4 py-2 border rounded-l focus:outline-none">
+                                             <button @click="applyCoupon" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700 font-sans">Apply</button>
+                                         </div>
+                                         <button @click="removeAllFromCart" class="text-red-600 hover:text-red-800 font-sans">
+                                             <i class="fas fa-trash mr-1"></i> Clear Cart
+                                         </button>
+                                     </div>
+                                 </div>
+                             </div>
+
+                            <div class="lg:w-96">
+                                 <div class="order-summary p-6 rounded-xl shadow sticky top-24">
+                                     <h3 class="text-xl font-bold mb-6">Order Summary</h3>
+
+                                     <div class="space-y-4 mb-6">
+                                         <div class="flex justify-between">
+                                             <span class="text-gray-600 font-sans">Subtotal</span>
+                                             <span class="font-sans">MWK {{ calculateLocalizedPrice(subtotalPrice).toLocaleString() }}</span>
+                                         </div>
+                                         <div v-if="couponApplied" class="flex justify-between text-green-600">
+                                             <span class="font-sans">Discount ({{ couponDiscount }}%)</span>
+                                             <span class="font-sans">-MWK {{ calculateLocalizedPrice(discountAmount).toLocaleString() }}</span>
+                                         </div>
+                                         <div class="flex justify-between items-center">
+                                             <span class="text-gray-600 font-sans">Shipping</span>
+                                             <select v-model="selectedCity" class="text-sm border rounded p-1 font-sans">
+                                                <option>Blantyre</option>
+                                                <option>Lilongwe</option>
+                                                <option>Mzuzu</option>
+                                                <option>Zomba</option>
+                                                <option>Other</option>
+                                             </select>
+                                             <span class="font-sans">MWK {{ shippingCost.toLocaleString() }}</span>
+                                         </div>
+                                         <div class="border-t pt-4 flex justify-between font-bold text-lg">
+                                             <span>Total</span>
+                                             <span>MWK {{ totalPrice.toLocaleString() }}</span>
+                                         </div>
+                                     </div>
+
+                                     <div class="mb-4">
+                                        <h4 class="font-bold mb-2">Pay With</h4>
+                                        <div class="space-y-2">
+                                            <div v-for="method in localPaymentMethods" :key="method.id" class="payment-option p-3 flex items-center" :class="{'selected': selectedPaymentMethod === method.id}" @click="selectedPaymentMethod = method.id">
+                                                <i :class="method.icon" class="mr-3 text-xl w-6 text-center"></i>
+                                                <span>{{ method.name }}</span>
+                                            </div>
+                                        </div>
+                                     </div>
+                                     <button @click="currentPage = 'checkout'" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 font-semibold font-sans">Proceed to Checkout</button>
+
+                                     <div class="mt-6 text-center">
+                                         <p class="text-gray-600 text-sm font-sans">Prices include all applicable taxes and duties</p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                    <!-- Account Page -->
+                     <div v-if="currentPage === 'account'" class="container mx-auto px-4 py-12 max-w-2xl">
+                         <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">My Account</h1>
+
+                        <div v-if="user" class="bg-white rounded-xl shadow p-8">
+                             <div class="text-center mb-8">
+                                 <div class="w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-4">
+                                     <i class="fas fa-user text-4xl text-blue-600"></i>
+                                 </div>
+                                 <h2 class="text-xl font-bold">{{ user.email }}</h2>
+                                 <p class="text-gray-600 font-sans">Member since {{ new Date(user.metadata.creationTime).toLocaleDateString() }}</p>
+                             </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                                 <div class="border rounded-lg p-4 text-center">
+                                     <div class="text-3xl font-bold text-blue-600 mb-2">3</div>
+                                     <div class="font-medium font-sans">Orders</div>
+                                 </div>
+                                 <div class="border rounded-lg p-4 text-center">
+                                     <div class="text-3xl font-bold text-blue-600 mb-2">{{ favorites.length }}</div>
+                                     <div class="font-medium font-sans">Favorites</div>
+                                 </div>
+                                 <div class="border rounded-lg p-4 text-center">
+                                     <div class="text-3xl font-bold text-blue-600 mb-2">{{ viewHistory.length }}</div>
+                                     <div class="font-medium font-sans">Recently Viewed</div>
+                                 </div>
+                             </div>
+
+                            <div class="border-t pt-6">
+                                 <button @click="logout" class="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 font-semibold font-sans">
+                                     <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                 </button>
+                             </div>
+                         </div>
+
+                        <div v-else>
+                             <div class="bg-white rounded-xl shadow p-8">
+                                 <div class="flex border-b mb-6">
+                                     <button @click="authMode = 'login'" class="px-4 py-2 font-medium" :class="{ 'text-blue-600 border-b-2 border-blue-600': authMode === 'login' }">Login</button>
+                                     <button @click="authMode = 'register'" class="px-4 py-2 font-medium" :class="{ 'text-blue-600 border-b-2 border-blue-600': authMode === 'register' }">Register</button>
+                                 </div>
+
+                                <div v-if="authMode === 'login'">
+                                     <div class="mb-4">
+                                         <label class="block text-gray-700 mb-2 font-sans">Email Address</label>
+                                         <input type="email" v-model="authForm.email" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                     </div>
+                                     <div class="mb-6">
+                                         <label class="block text-gray-700 mb-2 font-sans">Password</label>
+                                         <input type="password" v-model="authForm.password" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                     </div>
+                                     <div class="mb-6">
+                                         <button @click="handleAuthForm" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-semibold font-sans">
+                                             <i v-if="loading" class="fas fa-spinner fa-spin"></i>
+                                             <span v-else>Login to Your Account</span>
+                                         </button>
+                                     </div>
+                                     <div class="text-center">
+                                         <a href="#" @click.prevent="authMode = 'register'" class="text-blue-600 hover:underline font-sans">Don't have an account? Register here</a>
+                                     </div>
+                                 </div>
+
+                                <div v-if="authMode === 'register'">
+                                     <div class="mb-4">
+                                         <label class="block text-gray-700 mb-2 font-sans">Email Address</label>
+                                         <input type="email" v-model="authForm.email" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                     </div>
+                                     <div class="mb-4">
+                                         <label class="block text-gray-700 mb-2 font-sans">Password</label>
+                                         <input type="password" v-model="authForm.password" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                     </div>
+                                     <div class="mb-4">
+                                         <label class="block text-gray-700 mb-2 font-sans">Confirm Password</label>
+                                         <input type="password" v-model="authForm.confirmPassword" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                     </div>
+                                     <div class="mb-4">
+                                         <label class="block text-gray-700 mb-2 font-sans">Account Type</label>
+                                         <select v-model="authForm.role" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                             <option value="user">User</option>
+                                             <option value="vendor">Vendor</option>
+                                             <option value="member">Member</option>
+                                         </select>
+                                     </div>
+                                     <div class="mb-6">
+                                         <button @click="handleAuthForm" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-semibold font-sans">
+                                             <i v-if="loading" class="fas fa-spinner fa-spin"></i>
+                                             <span v-else>Create Account</span>
+                                         </button>
+                                     </div>
+                                     <div class="text-center">
+                                         <a href="#" @click.prevent="authMode = 'login'" class="text-blue-600 hover:underline font-sans">Already have an account? Login here</a>
+                                     </div>
+                                 </div>
+
+                                <div v-if="authError" class="mt-6 p-4 bg-red-50 text-red-700 rounded-lg font-sans">
+                                     <i class="fas fa-exclamation-circle mr-2"></i> {{ authError }}
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+
+                    <!-- Reviews Page -->
+                     <div v-if="currentPage === 'reviews'" class="container mx-auto px-4 py-12">
+                         <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Customer Reviews</h1>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                             <div class="bg-white rounded-xl shadow p-6 text-center">
+                                 <div class="text-5xl font-bold text-blue-600 mb-2">4.8</div>
+                                 <div class="star-rating flex justify-center mb-4">
+                                     <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                 </div>
+                                 <p class="text-gray-600 font-sans">Based on {{ reviews.length }} reviews</p>
+                             </div>
+                             <div class="md:col-span-2">
+                                 <div class="bg-white rounded-xl shadow p-6">
+                                     <div v-for="n in 5" :key="n" class="flex items-center mb-3">
+                                         <div class="w-16 font-sans">{{ 6-n }} stars</div>
+                                         <div class="flex-1 mx-4">
+                                             <div class="h-3 bg-gray-200 rounded-full overflow-hidden">
+                                                 <div class="h-full bg-yellow-400" :style="{ width: `${100 - (n-1)*20}%` }"></div>
+                                             </div>
+                                         </div>
+                                         <div class="w-16 text-right text-gray-600 font-sans">{{ Math.round(100 - (n-1)*20) }}%</div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                             <div v-for="review in reviews" :key="review.id" class="testimonial-card bg-white p-6 rounded-xl shadow">
+                                 <div class="flex items-center mb-4">
+                                     <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                                         <span class="font-bold text-blue-600">{{ review.name.charAt(0) }}</span>
+                                     </div>
+                                     <div>
+                                         <h4 class="font-bold">{{ review.name }}</h4>
+                                         <p class="text-sm text-gray-600 font-sans">Reviewed {{ review.product }}</p>
+                                     </div>
+                                 </div>
+                                 <div class="star-rating flex mb-3">
+                                     <i v-for="i in 5" :key="i" class="fas fa-star" :class="{ 'text-gray-300': i > review.rating }"></i>
+                                 </div>
+                                 <p class="text-gray-700 mb-2">{{ review.text }}</p>
+                                 <p class="text-sm text-gray-500 font-sans">Reviewed on {{ review.date }}</p>
+                             </div>
+                         </div>
+
+                        <div class="mt-12 text-center">
+                             <button class="bg-blue-600 text-white px-6 py-3 rounded font-sans">Load More Reviews</button>
+                         </div>
+                     </div>
+                 </div>
+            </transition>
+        </main>
+
+        <footer class="bg-gray-800 text-white py-12 mt-auto">
+             <div class="container mx-auto px-4">
+                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                     <div>
+                         <h3 class="text-xl font-bold mb-4">Plug Play Tech</h3>
+                         <p class="text-gray-300 mb-4 font-sans">Bringing affordable, reliable tech to Malawi's youth, empowering students and professionals with quality new and refurbished devices.</p>
+                         <div class="flex space-x-4">
+                             <a href="#" class="text-gray-300 hover:text-blue-400 transition"><i class="fab fa-facebook-f"></i></a>
+                             <a href="#" class="text-gray-300 hover:text-blue-400 transition"><i class="fab fa-twitter"></i></a>
+                             <a href="#" class="text-gray-300 hover:text-blue-400 transition"><i class="fab fa-instagram"></i></a>
+                             <a href="#" class="text-gray-300 hover:text-blue-400 transition"><i class="fab fa-linkedin-in"></i></a>
+                         </div>
+                     </div>
+                     <div>
+                         <h3 class="text-lg font-bold mb-4">Shop</h3>
+                         <ul class="space-y-2 font-sans">
+                             <li><a href="#" @click.prevent="setCategory('Apple Products')" class="text-gray-300 hover:text-blue-400 transition">Apple Products</a></li>
+                             <li><a href="#" @click.prevent="setCategory('Samsung Products')" class="text-gray-300 hover:text-blue-400 transition">Samsung Products</a></li>
+                             <li><a href="#" @click.prevent="setCategory('Laptops')" class="text-gray-300 hover:text-blue-400 transition">Laptops</a></li>
+                             <li><a href="#" @click.prevent="setCategory('Gaming Consoles')" class="text-gray-300 hover:text-blue-400 transition">Gaming Consoles</a></li>
+                         </ul>
+                     </div>
+                     <div>
+                         <h3 class="text-lg font-bold mb-4">Support</h3>
+                         <ul class="space-y-2 font-sans">
+                             <li><a href="#" class="text-gray-300 hover:text-blue-400 transition">Contact Us</a></li>
+                             <li><a href="#" class="text-gray-300 hover:text-blue-400 transition">FAQs</a></li>
+                             <li><a href="#" class="text-gray-300 hover:text-blue-400 transition">Shipping Policy</a></li>
+                             <li><a href="#" class="text-gray-300 hover:text-blue-400 transition">Returns & Warranty</a></li>
+                         </ul>
+                     </div>
+                     <div>
+                         <h3 class="text-lg font-bold mb-4">Contact Info</h3>
+                         <ul class="space-y-3 text-gray-300 font-sans">
+                             <li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-3"></i><span>Shop 15, Mall of Africa, Blantyre, Malawi</span></li>
+                             <li class="flex items-center"><i class="fas fa-phone mr-3"></i><span>+265 994 147 670</span></li>
+                             <li class="flex items-center"><i class="fas fa-envelope mr-3"></i><span>info@plugplaytech.mw</span></li>
+                             <li class="flex items-center"><i class="fas fa-clock mr-3"></i><span>Mon-Sat: 8:00 AM - 6:00 PM</span></li>
+                         </ul>
+                     </div>
+                 </div>
+                 <div class="text-center text-gray-500 text-sm mt-12 pt-6 border-t border-gray-700 font-sans">
+                     &copy; {{ new Date().getFullYear() }} Plug Play Tech. All rights reserved. Prices are estimates and subject to change based on market conditions in Malawi.
+                 </div>
+             </div>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const { createApp, nextTick } = Vue;
+
+        const app = createApp({
+            data() {
+                return {
+                    // Page & UI State
+                    currentPage: 'home',
+                    mobileMenuOpen: false,
+                    appLoading: true,
+                    loading: false,
+                     activeTab: 'specs',
+                    searchLoading: false,
+                    searchResults: [],
+                    // Products & Filtering
+                    products: [],
+                    selectedCategory: '',
+                    selectedProduct: null,
+                    searchQuery: '',
+                    selectedBrands: [],
+                    selectedConditions: [],
+                    priceRange: { min: 0, max: 3000 },
+                    sortOption: 'price-asc',
+
+                    // Product Detail State
+                    selectedImage: '',
+                    selectedColor: '',
+                    productReviews: [],
+                    productQAs: [],
+                    newReview: { name: '', rating: 5, text: '' },
+                    newQuestion: { name: '', text: '' },
+                    swiper: null,
+                    activeImageIndex: 0,
+                    // AI Features
+                    recommendedProducts: [],
+                    isGeneratingRecommendations: false,
+                    selectedForComparison: [],
+                    showComparisonModal: false,
+                    comparisonResult: '',
+                    isComparing: false,
+                    aiReviewSummary: '',
+                    isSummarizing: false,
+                    // Cart & Checkout
+                    cart: [],
+                    couponCode: '',
+                    couponApplied: false,
+                    couponDiscount: 10,
+                    selectedCity: 'Blantyre',
+                    selectedPaymentMethod: 'airtel_money',
+                    localPaymentMethods: [
+                      { id: 'airtel_money', name: 'Airtel Money', icon: 'fas fa-mobile-alt' },
+                      { id: 'tnm_mpamba', name: 'TNM Mpamba', icon: 'fas fa-phone-alt' },
+                      { id: 'bank_transfer', name: 'Bank Transfer', icon: 'fas fa-university' },
+                    ],
+
+                    // User & Auth
+                    db: null,
+                    auth: null,
+                    userId: null,
+                    user: null,
+                    authMode: 'login',
+                    authForm: { email: '', password: '', confirmPassword: '', role: 'user' },
+                    authError: '',
+                    favorites: [],
+                    viewHistory: [],
+
+                    reviews: [
+                        { id: 1, name: 'Maina Mkandawire', rating: 5, product: 'iPhone 13', text: 'Excellent service and genuine products! I got my iPhone 13 delivered right on time in Lilongwe. Highly recommended.', date: "2024-03-18" },
+                        { id: 2, name: 'Chisomo Mwale', rating: 5, product: 'Samsung Galaxy A55', text: 'Great phone for a great price. The team was very helpful in answering all my questions before I made the purchase.', date: "2024-03-05" },
+                        { id: 3, name: 'Limbani Phiri', rating: 4, product: 'HP Spectre x360', text: 'The laptop is powerful and sleek. Works perfectly for my university work. The delivery was fast.', date: "2024-02-20" },
+                        { id: 4, name: 'Mwayi Zimba', rating: 5, product: 'PlayStation 5', text: 'Finally got my hands on a PS5! Plug Play Tech had it in stock and the transaction was smooth. My weekends are sorted!', date: "2024-02-08" },
+                        { id: 16, name: 'Temwa Mkandawire', rating: 5, product: 'iPhone 14 Pro Max', text: "I ordered an iPhone 14 Pro Max for my birthday and it was delivered the very next day! The service is impeccable, the phone is genuine, and the entire process was seamless. I love what these guys are doing for tech in Malawi!", date: "2024-05-12" },
+                        { id: 17, name: 'Pacharo Mushera', rating: 5, product: 'Galaxy S24 Ultra', text: "The AI features on this S24 Ultra are mind-blowing. The team at Plug Play Tech was knowledgeable and helped me choose the perfect device. A truly professional setup.", date: "2024-04-28" },
+                        { id: 18, name: 'Wongani Mtekera', rating: 5, product: 'MacBook Air M3', text: "This MacBook is a dream for my video editing work. It's incredibly fast and the battery lasts forever. Best tech investment I've made.", date: "2024-04-15" },
+                        { id: 19, name: 'Chawezi Kamoza', rating: 4, product: 'OnePlus 12', text: "I'm so glad I can finally get OnePlus phones in Malawi! The performance is top-notch and it feels amazing to use. The team was super helpful.", date: "2024-03-30" },
+                        { id: 20, name: 'Constance Utsale', rating: 4, product: 'iPhone SE', text: "Perfect budget iPhone for my needs. The size is just right and battery lasts all day. Plug Play Tech had the best price in Malawi.", date: "2024-05-10" },
+                        { id: 21, name: 'Praise Kenamu', rating: 5, product: 'AirPods Pro', text: "These AirPods changed how I listen to music. Noise cancellation is amazing! Delivery was super fast to Lilongwe.", date: "2024-04-22" },
+                        { id: 22, name: 'Cliff Jabesi', rating: 4, product: 'MacBook Air M3', text: "Lightweight and powerful - perfect for my university studies. The battery really does last all day as advertised.", date: "2024-04-18" },
+                        { id: 23, name: 'Mwayi Banda', rating: 5, product: 'Galaxy S24 Ultra', text: "The camera on this phone is incredible! I take professional-quality photos without any editing. Best phone I've ever owned.", date: "2024-03-28" },
+                        { id: 24, name: 'Obert Moyo', rating: 4, product: 'PlayStation 5', text: "My gaming experience has been transformed. The graphics are mind-blowing and load times are non-existent. Worth every kwacha!", date: "2024-03-15" },
+                        { id: 25, name: 'Alex Kamzere', rating: 5, product: 'iPhone 14 Pro Max', text: "This phone is worth every penny. The display is gorgeous and performance is flawless. Plug Play Tech offered great warranty options too.", date: "2024-02-25" },
+                        { id: 26, name: 'Joey Dunda', rating: 5, product: 'Samsung Tablet', text: "Perfect tablet for my online classes. The screen size is just right and battery lasts through all my lectures. Great value for money.", date: "2024-05-05" },
+                        { id: 27, name: 'Mike Joshua', rating: 4, product: 'Apple Watch', text: "Helps me stay active and connected. The health tracking features are surprisingly accurate. Fast delivery to Blantyre.", date: "2024-04-30" },
+                        { id: 28, name: 'Edward Matheka', rating: 5, product: 'Gaming Laptop', text: "This laptop handles all my games at max settings. The cooling system is excellent even during long gaming sessions. Highly recommended for gamers!", date: "2024-04-10" },
+                        { id: 29, name: 'Veronica Kachale', rating: 5, product: 'iPhone 15 Pro', text: 'Absolutely thrilled with my purchase. The camera is a game-changer for my business. Customer service was top-notch!', date: "2024-06-10" },
+                        { id: 30, name: 'Kumbukani Jimu', rating: 4, product: 'Dell XPS 13', text: 'Solid laptop for a developer. Handles all my tasks with ease. Wish it had more ports, but the performance is great.', date: "2024-06-08" },
+                        { id: 31, name: 'Victor Zumazuma', rating: 5, product: 'Xbox Series S', text: 'Got the Series S for the kids and they love it. Great value and the delivery was surprisingly fast. Thanks Plug Play!', date: "2024-06-05" },
+                    ]
+                };
+            },
+            computed: {
+                cartItemCount() { return this.cart.reduce((total, item) => total + item.quantity, 0); },
+                featuredProducts() {
+                     const ids = [1015, 2017, 3007, 4001, 5001];
+                     return this.products.filter(p => ids.includes(p.id));
+                 },
+                brands() { return [...new Set(this.products.map(p => p.brand))].sort(); },
+                conditions() { return [...new Set(this.products.flatMap(p => p.inventory.map(i => i.condition)))].sort(); },
+                maxProductPrice() {
+                    const prices = this.products.flatMap(p => p.inventory.map(i => i.price));
+                    return prices.length ? Math.max(...prices) : 3000;
+                },
+                filteredProducts() {
+                    let filtered = this.searchResults.length > 0 || this.searchQuery ? this.searchResults : [...this.products];
+
+                    if (this.selectedCategory) {
+                        filtered = filtered.filter(p => p.category === this.selectedCategory);
+                    }
+                    if (this.selectedBrands.length > 0) {
+                        filtered = filtered.filter(p => this.selectedBrands.includes(p.brand));
+                    }
+                    if (this.selectedConditions.length > 0) {
+                        filtered = filtered.filter(p => p.inventory.some(i => this.selectedConditions.includes(i.condition)));
+                    }
+
+                    filtered = filtered.filter(p => {
+                        const minPrice = this.getMinPrice(p);
+                        return minPrice >= this.priceRange.min && minPrice <= this.priceRange.max;
+                    });
+
+                    if (this.searchQuery && this.searchResults.length === 0 && !this.searchLoading) {
+                        return [];
+                    }
+                    switch (this.sortOption) {
+                        case 'price-asc':
+                            filtered.sort((a, b) => this.getMinPrice(a) - this.getMinPrice(b));
+                            break;
+                        case 'price-desc':
+                            filtered.sort((a, b) => this.getMinPrice(b) - this.getMinPrice(a));
+                            break;
+                        case 'name-asc':
+                            filtered.sort((a, b) => a.name.localeCompare(b.name));
+                            break;
+                        case 'name-desc':
+                            filtered.sort((a, b) => b.name.localeCompare(a.name));
+                            break;
+                    }
+
+                    return filtered;
+                },
+                subtotalPrice() { return this.cart.reduce((total, item) => total + (item.price * item.quantity), 0); },
+                discountAmount() { return this.couponApplied ? Math.round(this.subtotalPrice * (this.couponDiscount / 100)) : 0; },
+                shippingCost() { return this.calculateDelivery(this.selectedCity); },
+                totalPrice() {
+                     const subtotalAfterDiscount = this.subtotalPrice - this.discountAmount;
+                    const localizedSubtotal = this.calculateLocalizedPrice(subtotalAfterDiscount);
+                    return localizedSubtotal + this.shippingCost;
+                }
+            },
+            watch: {
+                viewHistory: { handler: 'generateRecommendations', deep: true },
+                favorites: { handler: 'generateRecommendations', deep: true },
+                selectedProduct(newVal) {
+                    if (newVal) {
+                        this.selectedImage = this.optimizeImage(newVal.images[0], 600);
+                        this.activeImageIndex = 0;
+                        if (newVal.colors && newVal.colors.length > 0) {
+                           this.selectedColor = newVal.colors[0];
+                        }
+                        this.productReviews = this.reviews.filter(r => 
+                             r.product.toLowerCase().includes(newVal.name.toLowerCase().split(' ')[0])
+                        );
+                        if (this.currentPage === 'productDetail') {
+                            nextTick(() => this.initSwiper());
+                        }
+                    }
+                },
+                currentPage(newVal, oldVal) {
+                    if (newVal === 'productDetail' && this.selectedProduct) {
+                        nextTick(() => this.initSwiper());
+                    } else if (oldVal === 'productDetail' && this.swiper) {
+                        this.swiper.destroy(true, true);
+                        this.swiper = null;
+                    }
+                    if (newVal === 'productList' && !this.searchQuery) {
+                        this.searchResults = [];
+                    }
+                }
+            },
+            methods: {
+                goHome() { this.currentPage = 'home'; this.selectedCategory = ''; this.mobileMenuOpen = false; },
+                setCategory(category) {
+                     this.selectedCategory = category;
+                     this.searchQuery = '';
+                    this.searchResults = [];
+                    this.currentPage = 'productList';
+                     this.mobileMenuOpen = false;
+                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                 },
+                async intelligentSearch() {
+                    if (!this.searchQuery.trim()) {
+                        this.searchResults = [];
+                        this.currentPage = 'productList';
+                        return;
+                    }
+
+                    this.searchLoading = true;
+                    this.selectedCategory = '';
+                    this.searchResults = [];
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+
+                    const keywords = this.searchQuery.toLowerCase().split(' ').filter(k => k);
+                    const results = this.products.map(product => {
+                        let matchScore = 0;
+                        const productText = `${product.name} ${product.brand} ${product.description} ${Object.values(product.specifications || {}).join(' ')}`.toLowerCase();
+
+                        keywords.forEach(keyword => {
+                            if (productText.includes(keyword)) {
+                                matchScore += 1;
+                            }
+                        });
+
+                        if (product.name.toLowerCase().includes(this.searchQuery.toLowerCase())) {
+                            matchScore += 5;
+                        }
+                        return { ...product, matchScore };
+                    }).filter(item => item.matchScore > 0)
+                      .sort((a, b) => b.matchScore - a.matchScore);
+
+                    this.searchResults = results;
+                    this.searchLoading = false;
+                    this.currentPage = 'productList';
+                },
+                async viewProduct(product) {
+                    this.loading = true;
+                    this.aiReviewSummary = '';
+                    this.activeTab = 'specs';
+
+                    if (this.userId) {
+                        const productIdStr = product.id.toString();
+                        if (!this.viewHistory.includes(productIdStr)) {
+                            this.viewHistory.unshift(productIdStr);
+                            if (this.viewHistory.length > 20) this.viewHistory.pop();
+                        }
+                    }
+
+                    this.selectedProduct = product;
+                     this.currentPage = 'productDetail';
+                     this.loading = false;
+                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                 },
+                async handleAuthForm() {
+                    this.loading = true;
+                    this.authError = '';
+                    try {
+                        if (this.authMode === 'register') {
+                            if (this.authForm.password !== this.authForm.confirmPassword) {
+                                throw new Error("Passwords don't match");
+                            }
+                            let users = JSON.parse(localStorage.getItem('users') || '[]');
+                            if (users.find(u => u.email === this.authForm.email)) {
+                                throw new Error("Email already registered");
+                            }
+                            users.push({
+                                email: this.authForm.email,
+                                password: this.authForm.password,
+                                role: this.authForm.role
+                            });
+                            localStorage.setItem('users', JSON.stringify(users));
+                            this.showToast('Registration successful! Please log in.', 'success');
+                            this.authMode = 'login';
+                            this.authForm = { email: this.authForm.email, password: '', confirmPassword: '', role: 'user' };
+                        } else {
+                            let users = JSON.parse(localStorage.getItem('users') || '[]');
+                            let user = users.find(u => u.email === this.authForm.email && u.password === this.authForm.password);
+                            if (!user) throw new Error("Invalid email or password");
+                            localStorage.setItem('currentUser', JSON.stringify(user));
+                            this.user = user;
+                            this.userId = user.email;
+                            this.showToast('Login successful!', 'success');
+                            this.goHome();
+                        }
+                    } catch (error) {
+                        this.authError = error.message;
+                        this.showToast(error.message, 'error');
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                async logout() {
+                    await signOut(this.auth);
+                    this.user = null;
+                    this.userId = null;
+                    this.cart = [];
+                    this.favorites = [];
+                    this.viewHistory = [];
+                    this.showToast('You have been logged out.');
+                    this.goHome();
+                },
+                async generateRecommendations() {
+                    if (this.isGeneratingRecommendations || !this.userId || (this.viewHistory.length === 0 && this.favorites.length === 0)) return;
+
+                    this.isGeneratingRecommendations = true;
+
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    const recommendationPool = new Set([...this.viewHistory, ...this.favorites]);
+                    this.recommendedProducts = this.products
+                        .filter(p => !recommendationPool.has(p.id.toString()))
+                        .sort(() => 0.5 - Math.random()) // Randomize
+                        .slice(0, 4);
+
+                    this.isGeneratingRecommendations = false;
+                },
+                async toggleFavorite(productId) {
+                    if (!this.userId) { this.showToast('Please log in to use favorites.', 'warning'); this.currentPage = 'account'; return; }
+
+                    const idStr = productId.toString();
+                    const index = this.favorites.indexOf(idStr);
+                    if (index > -1) {
+                        this.favorites.splice(index, 1);
+                        this.showToast('Removed from favorites.');
+                    } else {
+                        this.favorites.unshift(idStr);
+                        this.showToast('Added to favorites!');
+                    }
+                },
+                isFavorite(productId) { return this.favorites.includes(productId.toString()); },
+                async addToCart(inventoryItem) {
+                    if (!this.userId) { this.showToast('Please log in to add items to cart', 'warning'); this.currentPage = 'account'; return; }
+
+                    inventoryItem.isAdding = true;
+
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                    const existingItem = this.cart.find(item => item.inventoryId === inventoryItem.id);
+
+                    if (existingItem) {
+                        if (existingItem.quantity < inventoryItem.stock) {
+                            existingItem.quantity++;
+                            this.showToast(`${this.selectedProduct.name} quantity updated!`, 'success');
+                        } else {
+                            this.showToast(`Maximum stock reached.`, 'warning');
+                        }
+                    } else {
+                        this.cart.push({
+                            id: 'cart-' + Date.now(),
+                            productId: this.selectedProduct.id,
+                            name: this.selectedProduct.name,
+                            condition: inventoryItem.condition,
+                            storage: inventoryItem.storage,
+                            price: inventoryItem.price,
+                            inventoryId: inventoryItem.id,
+                            quantity: 1
+                        });
+                        this.showToast(`${this.selectedProduct.name} added to cart!`, 'success');
+                    }
+                    inventoryItem.isAdding = false;
+                },
+                async updateQuantity(cartItem, newQuantity) {
+                    const quantity = parseInt(newQuantity, 10);
+                    if (isNaN(quantity) || quantity === cartItem.quantity) { this.$forceUpdate(); return; }
+
+                    const stockLimit = this.getInventoryStock(cartItem.inventoryId);
+                    if (quantity < 1) { this.removeFromCart(cartItem.id); return; }
+
+                    if (quantity > stockLimit) {
+                        this.showToast(`Only ${stockLimit} available.`, 'warning');
+                        cartItem.quantity = stockLimit;
+                    } else {
+                       cartItem.quantity = quantity;
+                    }
+                },
+                async removeFromCart(cartItemId) {
+                    this.cart = this.cart.filter(item => item.id !== cartItemId);
+                    this.showToast(`Item removed from cart.`, 'warning');
+                },
+                async removeAllFromCart() {
+                    this.cart = [];
+                    this.showToast(`All items removed from cart.`, 'warning');
+                },
+                async compareProducts() {
+                    this.isComparing = true;
+                    this.comparisonResult = '<h3><i class="fas fa-spinner fa-spin"></i> Generating Comparison...</h3><p>Please wait while our AI expert analyzes the products.</p>';
+                    this.showComparisonModal = true;
+
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    const productsToCompare = this.products.filter(p => this.selectedForComparison.includes(p.id));
+
+                    const allKeys = [...new Set(productsToCompare.flatMap(p => Object.keys(p.specifications)))];
+                    let table = '<table class="min-w-full"><thead><tr><th class="px-4 py-2">Feature</th>';
+                    productsToCompare.forEach(p => { table += `<th class="px-4 py-2">${p.name}</th>`; });
+                    table += '</tr></thead><tbody>';
+
+                    allKeys.forEach(spec => {
+                        table += `<tr><td class="border px-4 py-2 font-bold">${spec}</td>`;
+                        productsToCompare.forEach(p => {
+                            table += `<td class="border px-4 py-2">${p.specifications[spec] || 'N/A'}</td>`;
+                        });
+                        table += '</tr>';
+                    });
+
+                    table += `<tr><td class="border px-4 py-2 font-bold">Price (MWK)</td>`;
+                    productsToCompare.forEach(p => { table += `<td class="border px-4 py-2">From ${this.calculateLocalizedPrice(this.getMinPrice(p)).toLocaleString()}</td>`; });
+                    table += '</tr></tbody></table>';
+
+                    this.comparisonResult = `<h3 class="text-xl font-bold mb-4">Product Comparison</h3>${table}`;
+                    this.isComparing = false;
+                },
+                async summarizeReviews(product) {
+                    this.isSummarizing = true;
+                    this.aiReviewSummary = '<p><i class="fas fa-spinner fa-spin"></i> Summarizing reviews...</p>';
+
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    this.aiReviewSummary = `
+                        <h4 class="font-bold mb-2">What Customers Loved:</h4>
+                        <ul class="list-disc pl-5 mb-4 font-sans space-y-1">
+                            <li>Excellent battery life that lasts all day</li>
+                            <li>Fast performance for multitasking</li>
+                            <li>High-quality camera for photos and videos</li>
+                            <li>Premium design and build quality</li>
+                        </ul>
+                        <h4 class="font-bold mb-2">What Customers Noted:</h4>
+                        <ul class="list-disc pl-5 font-sans space-y-1">
+                            <li>Device can get warm during intensive tasks</li>
+                            <li>Charger not included in the box</li>
+                        </ul>
+                    `;
+                    this.isSummarizing = false;
+                },
+                submitReview() {
+                    if (!this.newReview.name || !this.newReview.text) { this.showToast('Please fill all fields', 'error'); return; }
+
+                    const review = { 
+                         id: Date.now(), 
+                         name: this.newReview.name, 
+                         rating: this.newReview.rating, 
+                         product: this.selectedProduct.name, 
+                         text: this.newReview.text, 
+                         date: new Date().toISOString().split('T')[0] 
+                     };
+
+                    this.reviews.unshift(review);
+                    this.productReviews.unshift(review);
+                    this.newReview = { name: '', rating: 5, text: '' };
+                    this.showToast('Review submitted successfully!', 'success');
+                },
+                submitQuestion() {
+                    if (!this.newQuestion.name || !this.newQuestion.text) { this.showToast('Please fill all fields', 'error'); return; }
+
+                    const qa = {
+                        question: this.newQuestion.text,
+                        asker: this.newQuestion.name,
+                        date: new Date().toISOString().split('T')[0],
+                        answer: "Thank you for your question! Our support team will respond within 24 hours."
+                    };
+
+                    this.productQAs.unshift(qa);
+                    this.newQuestion = { name: '', text: '' };
+                    this.showToast('Question submitted successfully!', 'success');
+                },
+                clearFilters() {
+                     this.selectedBrands = [];
+                     this.selectedConditions = [];
+                     this.priceRange = { min: 0, max: this.maxProductPrice };
+                     this.searchQuery = '';
+                     this.searchResults = [];
+                },
+                getInventoryStock(inventoryId) {
+                     const item = this.products.flatMap(p => p.inventory).find(i => i.id === inventoryId);
+                     return item ? item.stock : 0;
+                 },
+                getProductImage(productId) {
+                     const p = this.products.find(p => p.id === productId);
+                     return p ? p.images[0] : `https://placehold.co/100x100/e2e8f0/e2e8f0?text=Img`;
+                 },
+                getMinPrice(product) {
+                     if (!product || !product.inventory || product.inventory.length === 0) return 0;
+                     return Math.min(...product.inventory.map(item => item.price));
+                 },
+                getMaxStock(product) {
+                     if (!product || !product.inventory || product.inventory.length === 0) return 0;
+                     return product.inventory.reduce((total, item) => total + item.stock, 0);
+                 },
+                applyCoupon() {
+                     if (this.couponCode.toUpperCase() === 'STUDENT10') {
+                         this.couponApplied = true;
+                         this.showToast('Coupon applied successfully!', 'success');
+                     } else {
+                         this.showToast('Invalid coupon code', 'error');
+                     }
+                 },
+                calculateLocalizedPrice(basePriceUSD) {
+                    const exchangeRate = 1750; // MWK to USD
+                    const landedCostMultiplier = 1.25; // 25% for import duty, VAT, and margin
+                    if (!basePriceUSD) return 0;
+                    const finalPrice = basePriceUSD * exchangeRate * landedCostMultiplier;
+                    return Math.round(finalPrice / 1000) * 1000; // Round to nearest 1000 MWK
+                },
+                calculateDelivery(city) {
+                    const deliveryMatrix = {
+                        'Blantyre': 15000,
+                        'Lilongwe': 18000,
+                        'Mzuzu': 25000,
+                        'Zomba': 20000,
+                        'Other': 30000
+                    };
+                    return deliveryMatrix[city] || deliveryMatrix.Other;
+                },
+                optimizeImage(url, width = 600) {
+                    if (!url) return '';
+                    // For placeholder images, just replace the size
+                    if (url.includes('placehold.co')) {
+                        return url.replace(/\/[0-9]+x[0-9]+/, `/${width}x${width}`);
+                    }
+                    // In a real app, this would point to an image CDN like Cloudinary
+                    return url;
+                },
+                showToast(message, type = 'success') {
+                    const toast = document.createElement('div');
+                    const bgColor = type === 'success' ? 'bg-green-500' : type === 'error' ? 'bg-red-500' : 'bg-yellow-500';
+                    const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-triangle' : 'fa-info-circle';
+                    toast.className = `fixed bottom-4 right-4 px-6 py-4 rounded-lg shadow-lg text-white z-50 transition-all duration-300 transform translate-y-full font-sans ${bgColor}`;
+                    toast.innerHTML = `<div class="flex items-center"><i class="fas ${icon} mr-3"></i><span>${message}</span></div>`;
+                    document.body.appendChild(toast);
+
+                    setTimeout(() => { toast.style.transform = 'translateY(0)'; }, 100);
+                    setTimeout(() => {
+                         toast.style.transform = 'translateY(150%)';
+                        setTimeout(() => toast.remove(), 300);
+                     }, 3000);
+                },
+                initLazyLoading() {
+                    const lazyImages = document.querySelectorAll('.lazy-img:not(.loaded)');
+                    if ('IntersectionObserver' in window) {
+                        let observer = new IntersectionObserver((entries, observer) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    let img = entry.target;
+                                    img.src = img.dataset.src;
+                                    img.classList.add('loaded');
+                                    observer.unobserve(img);
+                                }
+                            });
+                        });
+                        lazyImages.forEach(img => observer.observe(img));
+                    } else { // Fallback for older browsers
+                        lazyImages.forEach(img => {
+                             img.src = img.dataset.src;
+                             img.classList.add('loaded');
+                         });
+                    }
+                },
+                initSwiper() {
+                    if (this.swiper) {
+                        this.swiper.destroy(true, true);
+                        this.swiper = null;
+                    }
+                    this.swiper = new Swiper('.swiper-container', {
+                        loop: true,
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        on: {
+                            slideChange: () => {
+                                this.activeImageIndex = this.swiper.realIndex;
+                            }
+                        }
+                    });
+                },
+                initializeFirebase() {
+                    try {
+                        if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                            const firebaseConfig = JSON.parse(__firebase_config);
+                            const app = initializeApp(firebaseConfig);
+                            this.auth = getAuth(app);
+                            onAuthStateChanged(this.auth, async (user) => {
+                                if (user) {
+                                    this.user = user;
+                                    this.userId = user.uid;
+                                } else {
+                                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                                        try {
+                                            await signInWithCustomToken(this.auth, __initial_auth_token);
+                                        } catch (e) {
+                                            console.error("Custom token sign-in failed, falling back to anonymous.", e);
+                                            await signInAnonymously(this.auth);
+                                        }
+                                    } else {
+                                        await signInAnonymously(this.auth);
+                                    }
+                                }
+                                this.appLoading = false;
+                            });
+                        } else {
+                            console.warn("Firebase config not found. Using simulated auth.");
+                            this.appLoading = false;
+                        }
+                    } catch (error) {
+                        console.error("Firebase initialization failed:", error);
+                        this.authError = "Could not connect to authentication service.";
+                        this.appLoading = false;
+                    }
+                },
+                populateProductData() {
+                    // Prices are now Base Prices in USD
+                    this.products = [
+                        // APPLE iPHONES
+                        {
+                            id: 1012,
+                            name: "iPhone 14 Pro Max",
+                            brand: "Apple",
+                            category: "Apple Products",
+                            description: "The ultimate iPhone with a stunning 6.7-inch display and revolutionary camera system.",
+                            images: [
+                                "https://images.unsplash.com/photo-1661961112951-7b7b7b7b7b7b?auto=format&fit=crop&w=600&q=80", // iPhone 14 Pro Max front
+                                "https://images.unsplash.com/photo-1661961112951-7b7b7b7b7b7b?auto=format&fit=crop&w=600&q=80", // iPhone 14 Pro Max back (use same or find another)
+                                "https://images.unsplash.com/photo-1661961112951-7b7b7b7b7b7b?auto=format&fit=crop&w=600&q=80"  // iPhone 14 Pro Max side
+                            ],
+                            colors: ["#5e4da8", "#424245", "#f1f2ed"],
+                            inventory: [{ id: 10121, condition: "New", storage: "128GB", price: 999, stock: 8 }, { id: 10122, condition: "New", storage: "256GB", price: 1099, stock: 5 }],
+                            specifications: { "Display": "6.7-inch Super Retina XDR with Dynamic Island", "Processor": "A16 Bionic", "Camera": "48MP Main + 12MP Ultra Wide + 12MP Telephoto", "OS": "iOS 16" }
+                        },
+                        {
+                            id: 1015,
+                            name: "iPhone 15 Pro Max",
+                            brand: "Apple",
+                            category: "Apple Products",
+                            description: "The most advanced iPhone with titanium design and powerful camera system.",
+                            images: [
+                                "https://images.unsplash.com/photo-1694700981234-iphone15promax?auto=format&fit=crop&w=600&q=80",
+                                "https://images.unsplash.com/photo-1694700981234-iphone15promax-back?auto=format&fit=crop&w=600&q=80",
+                                "https://images.unsplash.com/photo-1694700981234-iphone15promax-side?auto=format&fit=crop&w=600&q=80"
+                            ],
+                            colors: ["#8a817c", "#3c3c3c", "#f0f0f0"],
+                            inventory: [{ id: 10151, condition: "New", storage: "256GB", price: 1199, stock: 9 }, { id: 10152, condition: "New", storage: "512GB", price: 1399, stock: 6 }, { id: 10153, condition: "Refurbished", storage: "256GB", price: 950, stock: 4 }],
+                            specifications: { "Display": "6.7-inch Super Retina XDR with ProMotion", "Processor": "A17 Pro chip", "Camera": "48MP Main + 12MP Ultra Wide + 12MP 5x Telephoto", "OS": "iOS 17" }
+                        },
+                        {
+                            id: 2017,
+                            name: "Galaxy S24 Ultra",
+                            brand: "Samsung",
+                            category: "Samsung Products",
+                            description: "Samsung's flagship with S Pen and AI-powered camera.",
+                            images: [
+                                "https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-sm-s928bzkgmea-thumb-539663290?$650_519_PNG$",
+                                "https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-sm-s928bzkgmea-thumb-539663290-2?$650_519_PNG$",
+                                "https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-sm-s928bzkgmea-thumb-539663290-3?$650_519_PNG$"
+                            ],
+                            colors: ["#212121", "#5c7f67", "#7d5260"],
+                            inventory: [{ id: 20171, condition: "New", storage: "256GB", price: 1299, stock: 8 }],
+                            specifications: { "Display": "6.8-inch Dynamic AMOLED 2X", "Processor": "Snapdragon 8 Gen 3 for Galaxy", "Camera": "200MP + 50MP + 10MP + 12MP quad camera", "OS": "Android 14" }
+                        },
+                        {
+                            id: 2024,
+                            name: "Galaxy A55",
+                            brand: "Samsung",
+                            category: "Samsung Products",
+                            description: "Premium mid-range smartphone with flagship features at an affordable price.",
+                            images: [
+                                "https://images.samsung.com/is/image/samsung/p6pim/levant/2403/gallery/levant-galaxy-a55-5g-sm-a556blbamea-thumb-539663290?$650_519_PNG$",
+                                "https://images.samsung.com/is/image/samsung/p6pim/levant/2403/gallery/levant-galaxy-a55-5g-sm-a556blbamea-thumb-539663290-2?$650_519_PNG$",
+                                "https://images.samsung.com/is/image/samsung/p6pim/levant/2403/gallery/levant-galaxy-a55-5g-sm-a556blbamea-thumb-539663290-2?$650_519_PNG$"
+                            ],
+                            colors: ["#0a2540", "#f9f6f2"],
+                            inventory: [{ id: 20241, condition: "New", storage: "128GB", price: 449, stock: 12 }],
+                            specifications: { "Display": "6.6-inch Super AMOLED 120Hz", "Processor": "Exynos 1480", "Camera": "50MP triple camera with OIS", "OS": "Android 14" }
+                        },
+
+                        // OTHER SMARTPHONES
+                        {
+                            id: 3001,
+                            name: "Pixel 8",
+                            brand: "Google",
+                            category: "Other Smartphones",
+                            description: "Google's flagship with advanced AI camera features and pure Android experience.",
+                            images: [
+                                "https://store.google.com/product/images/phone_pixel_8_front.png",
+                            ],
+                            colors: ["#1e3a8a", "#0f766e"],
+                            inventory: [{ id: 30071, condition: "New", storage: "256GB", price: 799, stock: 5 }],
+                            specifications: { "Display": "6.82-inch Fluid AMOLED", "Processor": "Snapdragon 8 Gen 3", "Camera": "50MP + 48MP + 64MP triple camera", "OS": "OxygenOS 14" }
+                        },
+
+                        // LAPTOPS
+                        {
+                            id: 4001,
+                            name: "MacBook Air M3",
+                            brand: "Apple",
+                            category: "Laptops",
+                            description: "Ultra-thin laptop with Apple's powerful M3 chip and all-day battery life.",
+                            images: [
+                                "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-13-m3-hero-202402?wid=600&hei=600&fmt=jpeg&qlt=90&.v=1707332189647",
+                                "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-13-m3-gallery1-202402?wid=600&hei=600&fmt=jpeg&qlt=90&.v=1707332189647",
+                                "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-13-m3-hero-202402?wid=600&hei=600&fmt=jpeg&qlt=90&.v=1707332189647",
+                                "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-13-m3-gallery1-202402?wid=600&hei=600&fmt=jpeg&qlt=90&.v=1707332189647",
+                                "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-13-m3-gallery2-202402?wid=600&hei=600&fmt=jpeg&qlt=90&.v=1707332189647"
+                            ],
+                            colors: ["#545453", "#f0e6d6", "#a2aaad"],
+                            inventory: [{ id: 40011, condition: "New", storage: "256GB SSD", price: 999, stock: 5 }, { id: 40012, condition: "Refurbished", storage: "256GB SSD", price: 799, stock: 3 }],
+                            specifications: { "Display": "13.6-inch Liquid Retina", "Processor": "Apple M3 chip", "Memory": "8GB Unified Memory", "OS": "macOS" }
+                        },
+                        {
+                            id: 4005,
+                            name: "Dell XPS 13",
+                            brand: "Dell",
+                            category: "Laptops",
+                            description: "Premium Windows laptop with InfinityEdge display and powerful performance.",
+                            images: [
+                                "https://i.dell.com/sites/csimages/Video_Imagery/all/xps-13-9310-laptop-pdp-mod1.jpg",
+                                "https://i.dell.com/sites/csimages/Video_Imagery/all/xps-13-9310-laptop-pdp-mod2.jpg"
+                            ],
+                            colors: ["#a2aaad", "#e1e3e4"],
+                            inventory: [{ id: 40051, condition: "New", storage: "512GB SSD", price: 1299, stock: 4 }],
+                            specifications: { "Display": "13.4-inch FHD+ InfinityEdge", "Processor": "Intel Core i7", "Memory": "16GB LPDDR5", "OS": "Windows 11" }
+                        },
+
+                        // GAMING CONSOLES
+                        {
+                            id: 5001,
+                            name: "PlayStation 5 Standard",
+                            brand: "Sony",
+                            category: "Gaming Consoles",
+                            description: "Next-gen gaming console with lightning-fast loading and immersive gaming experiences.",
+                            images: [
+                                "https://images.unsplash.com/photo-1606813909355-6c2b7b7b7b7b?auto=format&fit=crop&w=600&q=80"
+                            ],
+                            colors: ["#ffffff"],
+                            inventory: [{ id: 50011, condition: "New", storage: "825GB", price: 499, stock: 8 }],
+                            specifications: { "CPU": "8x Cores @ 3.5GHz (Zen 2)", "GPU": "10.28 TFLOPs, 36 CUs @ 2.23GHz", "Storage": "825GB SSD" }
+                        },
+                        {
+                            id: 5004,
+                            name: "Xbox Series X",
+                            brand: "Microsoft",
+                            category: "Gaming Consoles",
+                            description: "The fastest, most powerful Xbox ever with next-gen performance.",
+                            images: [
+                                "https://images.unsplash.com/photo-1606813909355-6c2b7b7b7b7b?auto=format&fit=crop&w=600&q=80"
+                            ],
+                            colors: ["#000000"],
+                            inventory: [{ id: 50041, condition: "New", storage: "1TB", price: 499, stock: 6 }],
+                            specifications: { "CPU": "8x Cores @ 3.8 GHz (Zen 2)", "GPU": "12 TFLOPS, 52 CUs @ 1.825 GHz", "Storage": "1TB Custom NVME SSD" }
+                        },
+
+                        // ACCESSORIES
+                        {
+                            id: 6001,
+                            name: "iPhone Lightning Charger",
+                            brand: "Apple",
+                            category: "Accessories",
+                            description: "Original Apple Lightning charging cable for all iPhone models.",
+                            images: [
+                                "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80"
+                            ],
+                            colors: [],
+                            inventory: [{ id: 60011, condition: "New", storage: "N/A", price: 19, stock: 50 }],
+                            specifications: { "Type": "Charger Cable", "Connector": "Lightning to USB-A" }
+                        },
+                        {
+                            id: 6003,
+                            name: "USB-C PD Charger 65W",
+                            brand: "Anker",
+                            category: "Accessories",
+                            description: "Powerful 65W USB-C Power Delivery charger for laptops and phones.",
+                            images: [
+                                "https://images.anker.com/anker-65w-charger.jpg"
+                            ],
+                            colors: [],
+                            inventory: [{ id: 60031, condition: "New", storage: "N/A", price: 35, stock: 30 }],
+                            specifications: { "Type": "Power Adapter", "Wattage": "65W" }
+                        }
+                    ];
+
+                    // 1. Add new iPhones not in your current list
+                    this.products.push(
+                        // iPhone X Series
+                        {
+                            id: 1101,
+                            name: "iPhone X",
+                            brand: "Apple",
+                            category: "Apple Products",
+                            description: "Apple's first all-screen iPhone with Face ID.",
+                            images: [
+                                "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80"
+                            ],
+                            colors: ["#222", "#fff"],
+                            inventory: [
+                                { id: 11011, condition: "Refurbished", storage: "64GB", price: 405000, stock: 3 },
+                                { id: 11012, condition: "Refurbished", storage: "256GB", price: 453000, stock: 2 }
+                            ],
+                            specifications: { "Display": "5.8-inch Super Retina", "Processor": "A11 Bionic", "Camera": "12MP Dual", "OS": "iOS" }
+                        },
+                        // iPhone 11 Series
+                        {
+                            id: 1102,
+                            name: "iPhone 11",
+                            brand: "Apple",
+                            category: "Apple Products",
+                            description: "Dual-camera system and all-day battery life.",
+                            images: [
+                                "https://images.unsplash.com/photo-1573152958734-1922c1e8e4c5?auto=format&fit=crop&w=600&q=80"
+                            ],
+                            colors: ["#222", "#fff", "#f1c40f"],
+                            inventory: [
+                                { id: 11021, condition: "Refurbished", storage: "64GB", price: 392000, stock: 4 },
+                                { id: 11022, condition: "Refurbished", storage: "128GB", price: 418000, stock: 3 },
+                                { id: 11023, condition: "Refurbished", storage: "256GB", price: 445000, stock: 2 }
+                            ],
+                            specifications: { "Display": "6.1-inch Liquid Retina", "Processor": "A13 Bionic", "Camera": "12MP Dual", "OS": "iOS" }
+                        },
+                        // iPhone 11 Pro
+                        {
+                            id: 1103,
+                            name: "iPhone 11 Pro",
+                            brand: "Apple",
+                            category: "Apple Products",
+                            description: "Triple-camera system and Super Retina XDR display.",
+                            images: [
+                                "https://images.unsplash.com/photo-1573152958734-1922c1e8e4c5?auto=format&fit=crop&w=600&q=80"
+                            ],
+                            colors: ["#222", "#fff", "#b2bec3"],
+                            inventory: [
+                                { id: 11031, condition: "Refurbished", storage: "64GB", price: 458000, stock: 2 },
+                                { id: 11032, condition: "Refurbished", storage: "256GB", price: 484000, stock: 2 },
+                                { id: 11033, condition: "Refurbished", storage: "512GB", price: 497000, stock: 1 }
+                            ],
+                            specifications: { "Display": "5.8-inch Super Retina XDR", "Processor": "A13 Bionic", "Camera": "12MP Triple", "OS": "iOS" }
+                        },
+                        // iPhone 12 Series
+                        {
+                            id: 1104,
+                            name: "iPhone 12",
+                            brand: "Apple",
+                            category: "Apple Products",
+                            description: "5G speed and A14 Bionic chip.",
+                            images: [
+                                "https://images.unsplash.com/photo-1603898037225-1c1e6c1e6c1e?auto=format&fit=crop&w=600&q=80"
+                            ],
+                            colors: ["#222", "#fff", "#f1c40f"],
+                            inventory: [
+                                { id: 11041, condition: "Refurbished", storage: "64GB", price: 418000, stock: 3 },
+                                { id: 11042, condition: "Refurbished", storage: "128GB", price: 445000, stock: 2 },
+                                { id: 11043, condition: "Refurbished", storage: "256GB", price: 484000, stock: 2 }
+                            ],
+                            specifications: { "Display": "6.1-inch Super Retina XDR", "Processor": "A14 Bionic", "Camera": "12MP Dual", "OS": "iOS" }
+                        },
+                        // iPhone 12 Pro
+                        {
+                            id: 1105,
+                            name: "iPhone 12 Pro",
+                            brand: "Apple",
+                            category: "Apple Products",
+                            description: "Pro camera system and LiDAR scanner.",
+                            images: [
+                                "https://images.unsplash.com/photo-1603898037225-1c1e6c1e6c1e?auto=format&fit=crop&w=600&q=80"
+                            ],
+                            colors: ["#222", "#fff", "#b2bec3"],
+                            inventory: [
+                                { id: 11051, condition: "Refurbished", storage: "128GB", price: 497000, stock: 2 },
+                                { id: 11052, condition: "Refurbished", storage: "256GB", price: 536000, stock: 1 },
+                                { id: 11053, condition: "Refurbished", storage: "512GB", price: 563000, stock: 1 }
+                            ],
+                            specifications: { "Display": "6.1-inch Super Retina XDR", "Processor": "A14 Bionic", "Camera": "12MP Triple", "OS": "iOS" }
+                        },
+                        // iPhone 12 Pro Max
+                        {
+                            id: 1106,
+                            name: "iPhone 12 Pro Max",
+                            brand: "Apple",
+                            category: "Apple Products",
+                            description: "Largest display and best camera in the 12 series.",
+                            images: [
+                                "https://images.unsplash.com/photo-1603898037225-1c1e6c1e6c1e?auto=format&fit=crop&w=600&q=80"
+                            ],
+                            colors: ["#222", "#fff", "#b2bec3"],
+                            inventory: [
+                                { id: 11061, condition: "Refurbished", storage: "128GB", price: 523000, stock: 2 },
+                                { id: 11062, condition: "Refurbished", storage: "256GB", price: 563000, stock: 1 },
+                                { id: 11063, condition: "Refurbished", storage: "512GB", price: 589000, stock: 1 }
+                            ],
+                            specifications: { "Display": "6.7-inch Super Retina XDR", "Processor": "A14 Bionic", "Camera": "12MP Triple", "OS": "iOS" }
+                        }
+                        // ...continue for other missing models as needed...
+                    );
+
+                    // 2. Update prices for products already in your list (example for iPhone 14 Pro Max)
+                    const updatePrice = (productName, storage, newPrice) => {
+                        const product = this.products.find(p => p.name === productName);
+                        if (product) {
+                            const item = product.inventory.find(i => i.storage === storage);
+                            if (item) item.price = newPrice;
+                        }
+                    };
+                    // Example: update iPhone 14 Pro Max prices
+                    updatePrice("iPhone 14 Pro Max", "128GB", 1374000);
+                    updatePrice("iPhone 14 Pro Max", "256GB", 1485000);
+                    // ...repeat for other models as needed...
+
+                    // 3. Add Samsung, Pixel, OnePlus, etc. not in your list, using the same format as above.
+                    // Example for Galaxy S10:
+                    this.products.push(
+                        {
+                            id: 2101,
+                            name: "Galaxy S10",
+                            brand: "Samsung",
+                            category: "Samsung Products",
+                            description: "Infinity-O Display and pro-grade camera.",
+                            images: [
+                                "https://images.samsung.com/is/image/samsung/p6pim/levant/galaxy-s10-sm-g973-sm-g973fzwdmea-frontwhite-thumb-156464021?$650_519_PNG$"
+                            ],
+                            colors: ["#fff", "#222"],
+                            inventory: [
+                                { id: 21011, condition: "Refurbished", storage: "128GB", price: 298000, stock: 2 },
+                                { id: 21012, condition: "Refurbished", storage: "256GB", price: 365000, stock: 1 }
+                            ],
+                            specifications: { "Display": "6.1-inch Dynamic AMOLED", "Processor": "Exynos 9820", "Camera": "16MP Triple", "OS": "Android" }
+                        }
+                        // ...continue for other missing Samsung models...
+                    );
+
+                    // 4. Repeat for other brands and accessories as needed, using your price list and Unsplash/Pexels/official images.
+                }
+            },
+            mounted() {
+                this.populateProductData();
+                this.initializeFirebase();
+
+                nextTick(() => {
+                     this.initLazyLoading();
+                     // Set initial price range max based on populated products
+                    this.priceRange.max = this.maxProductPrice;
+                });
+            },
+            updated() {
+                nextTick(() => { this.initLazyLoading(); });
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
