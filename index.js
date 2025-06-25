@@ -624,7 +624,7 @@ const app = createApp({
                         "https://images.unsplash.com/photo-1694700981234-iphone15promax-side?auto=format&fit=crop&w=600&q=80"
                     ],
                     colors: ["#8a817c", "#3c3c3c", "#f0f0f0"],
-                    inventory: [{ id: 10151, condition: "New", storage: "256GB", price: 1199, stock: 9 }, { id: 10152, condition: "New", storage: "512GB", price: 1399, stock: 6 }, { id: 10153, condition: "Refurbished", storage: "256GB", price: 950, stock: 4 }],
+                    inventory: [{ id: 10151, condition: "New", storage: "256GB", price: 1199, stock: 9 },  { id: 10153, condition: "Refurbished", storage: "256GB", price: 950, stock: 4 }, { id: 10152, condition: "New", storage: "512GB", price: 1399, stock: 6 }],
                     specifications: { "Display": "6.7-inch Super Retina XDR with ProMotion", "Processor": "A17 Pro chip", "Camera": "48MP Main + 12MP Ultra Wide + 12MP 5x Telephoto", "OS": "iOS 17" }
                 },
                 {
