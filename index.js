@@ -777,8 +777,8 @@ const app = createApp({
                     ],
                     colors: ["#222", "#fff"],
                     inventory: [
-                        { id: 11011, condition: "Refurbished", storage: "64GB", price: 405000, stock: 3 },
-                        { id: 11012, condition: "Refurbished", storage: "256GB", price: 453000, stock: 2 }
+                        { id: 11011, condition: "Refurbished", storage: "64GB", price: 231, stock: 3 }, // 405000 / 1750
+                        { id: 11012, condition: "Refurbished", storage: "256GB", price: 259, stock: 2 } // 453000 / 1750
                     ],
                     specifications: { "Display": "5.8-inch Super Retina", "Processor": "A11 Bionic", "Camera": "12MP Dual", "OS": "iOS" }
                 },
@@ -794,9 +794,9 @@ const app = createApp({
                     ],
                     colors: ["#222", "#fff", "#f1c40f"],
                     inventory: [
-                        { id: 11021, condition: "Refurbished", storage: "64GB", price: 392000, stock: 4 },
-                        { id: 11022, condition: "Refurbished", storage: "128GB", price: 418000, stock: 3 },
-                        { id: 11023, condition: "Refurbished", storage: "256GB", price: 445000, stock: 2 }
+                        { id: 11021, condition: "Refurbished", storage: "64GB", price: 224, stock: 4 }, // 392000 / 1750
+                        { id: 11022, condition: "Refurbished", storage: "128GB", price: 239, stock: 3 }, // 418000 / 1750
+                        { id: 11023, condition: "Refurbished", storage: "256GB", price: 254, stock: 2 } // 445000 / 1750
                     ],
                     specifications: { "Display": "6.1-inch Liquid Retina", "Processor": "A13 Bionic", "Camera": "12MP Dual", "OS": "iOS" }
                 },
@@ -812,9 +812,9 @@ const app = createApp({
                     ],
                     colors: ["#222", "#fff", "#b2bec3"],
                     inventory: [
-                        { id: 11031, condition: "Refurbished", storage: "64GB", price: 458000, stock: 2 },
-                        { id: 11032, condition: "Refurbished", storage: "256GB", price: 484000, stock: 2 },
-                        { id: 11033, condition: "Refurbished", storage: "512GB", price: 497000, stock: 1 }
+                        { id: 11031, condition: "Refurbished", storage: "64GB", price: 262, stock: 2 }, // 458000 / 1750
+                        { id: 11032, condition: "Refurbished", storage: "256GB", price: 276, stock: 2 },// 484000 / 1750
+                        { id: 11033, condition: "Refurbished", storage: "512GB", price: 284, stock: 1 } // 497000 / 1750
                     ],
                     specifications: { "Display": "5.8-inch Super Retina XDR", "Processor": "A13 Bionic", "Camera": "12MP Triple", "OS": "iOS" }
                 },
@@ -830,9 +830,9 @@ const app = createApp({
                     ],
                     colors: ["#222", "#fff", "#f1c40f"],
                     inventory: [
-                        { id: 11041, condition: "Refurbished", storage: "64GB", price: 418000, stock: 3 },
-                        { id: 11042, condition: "Refurbished", storage: "128GB", price: 445000, stock: 2 },
-                        { id: 11043, condition: "Refurbished", storage: "256GB", price: 484000, stock: 2 }
+                     { id: 11041, condition: "Refurbished", storage: "64GB", price: 239, stock: 3 }, // 418000 / 1750
+                     { id: 11042, condition: "Refurbished", storage: "128GB", price: 254, stock: 2 }, // 445000 / 1750
+                     { id: 11043, condition: "Refurbished", storage: "256GB", price: 276, stock: 2 } // 484000 / 1750
                     ],
                     specifications: { "Display": "6.1-inch Super Retina XDR", "Processor": "A14 Bionic", "Camera": "12MP Dual", "OS": "iOS" }
                 },
@@ -848,9 +848,9 @@ const app = createApp({
                     ],
                     colors: ["#222", "#fff", "#b2bec3"],
                     inventory: [
-                        { id: 11051, condition: "Refurbished", storage: "128GB", price: 497000, stock: 2 },
-                        { id: 11052, condition: "Refurbished", storage: "256GB", price: 536000, stock: 1 },
-                        { id: 11053, condition: "Refurbished", storage: "512GB", price: 563000, stock: 1 }
+                     { id: 11051, condition: "Refurbished", storage: "128GB", price: 284, stock: 2 }, // 497000 / 1750
+                     { id: 11052, condition: "Refurbished", storage: "256GB", price: 306, stock: 1 }, // 536000 / 1750
+                     { id: 11053, condition: "Refurbished", storage: "512GB", price: 322, stock: 1 } // 563000 / 1750
                     ],
                     specifications: { "Display": "6.1-inch Super Retina XDR", "Processor": "A14 Bionic", "Camera": "12MP Triple", "OS": "iOS" }
                 },
@@ -866,9 +866,9 @@ const app = createApp({
                     ],
                     colors: ["#222", "#fff", "#b2bec3"],
                     inventory: [
-                        { id: 11061, condition: "Refurbished", storage: "128GB", price: 523000, stock: 2 },
-                        { id: 11062, condition: "Refurbished", storage: "256GB", price: 563000, stock: 1 },
-                        { id: 11063, condition: "Refurbished", storage: "512GB", price: 589000, stock: 1 }
+                       { id: 11061, condition: "Refurbished", storage: "128GB", price: 299, stock: 2 }, // 523000 / 1750
+                       { id: 11062, condition: "Refurbished", storage: "256GB", price: 322, stock: 1 }, // 563000 / 1750
+                       { id: 11063, condition: "Refurbished", storage: "512GB", price: 337, stock: 1 } // 589000 / 1750
                     ],
                     specifications: { "Display": "6.7-inch Super Retina XDR", "Processor": "A14 Bionic", "Camera": "12MP Triple", "OS": "iOS" }
                 }
@@ -901,8 +901,8 @@ const app = createApp({
                     ],
                     colors: ["#fff", "#222"],
                     inventory: [
-                        { id: 21011, condition: "Refurbished", storage: "128GB", price: 298000, stock: 2 },
-                        { id: 21012, condition: "Refurbished", storage: "256GB", price: 365000, stock: 1 }
+                                { id: 21011, condition: "Refurbished", storage: "128GB", price: 170, stock: 2 }, // 298000 / 1750
+                                { id: 21012, condition: "Refurbished", storage: "256GB", price:209, stock: 1 } // 365000 / 1750
                     ],
                     specifications: { "Display": "6.1-inch Dynamic AMOLED", "Processor": "Exynos 9820", "Camera": "16MP Triple", "OS": "Android" }
                 }
