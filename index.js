@@ -1,5 +1,16 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { 
+    initializeApp 
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { 
+    getAuth, 
+    signInAnonymously, 
+    signInWithCustomToken, 
+    onAuthStateChanged, 
+    // Unused:
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut 
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
 const { createApp, nextTick } = Vue;
 
@@ -526,10 +537,10 @@ const app = createApp({
                 let observer = new IntersectionObserver((entries, observer) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            let img = entry.target;
-                            img.src = img.dataset.src;
-                            img.classList.add('loaded');
-                            observer.unobserve(img);
+                          let img = entry.target;
+                          img.src = img.dataset.src;
+                          img.classList.add('loaded');
+                          observer.unobserve(img);
                         }
                     });
                 });
@@ -594,9 +605,7 @@ const app = createApp({
             }
         },
         populateProductData() {
-            // Prices are now Base Prices in USD
             this.products = [
-                // APPLE iPHONES
                 {
                     id: 1012,
                     name: "iPhone 14 Pro Max",
@@ -604,13 +613,21 @@ const app = createApp({
                     category: "Apple Products",
                     description: "The ultimate iPhone with a stunning 6.7-inch display and revolutionary camera system.",
                     images: [
-                        "https://images.unsplash.com/photo-1661961112951-7b7b7b7b7b7b?auto=format&fit=crop&w=600&q=80", // iPhone 14 Pro Max front
-                        "https://images.unsplash.com/photo-1661961112951-7b7b7b7b7b7b?auto=format&fit=crop&w=600&q=80", // iPhone 14 Pro Max back (use same or find another)
-                        "https://images.unsplash.com/photo-1661961112951-7b7b7b7b7b7b?auto=format&fit=crop&w=600&q=80"  // iPhone 14 Pro Max side
+                        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-max-deep-purple-select?wid=600&hei=600&fmt=jpeg&qlt=90&.v=1660753619946",
+                        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-max-deep-purple-back?wid=600&hei=600&fmt=jpeg&qlt=90&.v=1660753619946",
+                        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-max-deep-purple-side?wid=600&hei=600&fmt=jpeg&qlt=90&.v=1660753619946"
                     ],
                     colors: ["#5e4da8", "#424245", "#f1f2ed"],
-                    inventory: [{ id: 10121, condition: "New", storage: "128GB", price: 999, stock: 8 }, { id: 10122, condition: "New", storage: "256GB", price: 1099, stock: 5 }],
-                    specifications: { "Display": "6.7-inch Super Retina XDR with Dynamic Island", "Processor": "A16 Bionic", "Camera": "48MP Main + 12MP Ultra Wide + 12MP Telephoto", "OS": "iOS 16" }
+                    inventory: [
+                        { id: 10121, condition: "New", storage: "128GB", price: 999, stock: 8 },
+                        { id: 10122, condition: "New", storage: "256GB", price: 1099, stock: 5 }
+                    ],
+                    specifications: {
+                        "Display": "6.7-inch Super Retina XDR with Dynamic Island",
+                        "Processor": "A16 Bionic",
+                        "Camera": "48MP Main + 12MP Ultra Wide + 12MP Telephoto",
+                        "OS": "iOS 16"
+                    }
                 },
                 {
                     id: 1015,
@@ -619,13 +636,22 @@ const app = createApp({
                     category: "Apple Products",
                     description: "The most advanced iPhone with titanium design and powerful camera system.",
                     images: [
-                        "https://images.unsplash.com/photo-1694700981234-iphone15promax?auto=format&fit=crop&w=600&q=80",
-                        "https://images.unsplash.com/photo-1694700981234-iphone15promax-back?auto=format&fit=crop&w=600&q=80",
-                        "https://images.unsplash.com/photo-1694700981234-iphone15promax-side?auto=format&fit=crop&w=600&q=80"
+                        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-max-blue-titanium?wid=600&hei=600&fmt=jpeg&qlt=90&.v=1692923777972",
+                        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-max-blue-titanium-back?wid=600&hei=600&fmt=jpeg&qlt=90&.v=1692923777972",
+                        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-max-blue-titanium-side?wid=600&hei=600&fmt=jpeg&qlt=90&.v=1692923777972"
                     ],
                     colors: ["#8a817c", "#3c3c3c", "#f0f0f0"],
-                    inventory: [{ id: 10151, condition: "New", storage: "256GB", price: 1199, stock: 9 },  { id: 10153, condition: "Refurbished", storage: "256GB", price: 950, stock: 4 }, { id: 10152, condition: "New", storage: "512GB", price: 1399, stock: 6 }],
-                    specifications: { "Display": "6.7-inch Super Retina XDR with ProMotion", "Processor": "A17 Pro chip", "Camera": "48MP Main + 12MP Ultra Wide + 12MP 5x Telephoto", "OS": "iOS 17" }
+                    inventory: [
+                        { id: 10151, condition: "New", storage: "256GB", price: 1199, stock: 9 },
+                        { id: 10153, condition: "Refurbished", storage: "256GB", price: 950, stock: 4 },
+                        { id: 10152, condition: "New", storage: "512GB", price: 1399, stock: 6 }
+                    ],
+                    specifications: {
+                        "Display": "6.7-inch Super Retina XDR with ProMotion",
+                        "Processor": "A17 Pro chip",
+                        "Camera": "48MP Main + 12MP Ultra Wide + 12MP 5x Telephoto",
+                        "OS": "iOS 17"
+                    }
                 },
                 {
                     id: 2017,
@@ -639,8 +665,15 @@ const app = createApp({
                         "https://images.samsung.com/is/image/samsung/p6pim/levant/2401/gallery/levant-galaxy-s24-ultra-sm-s928bzkgmea-thumb-539663290-3?$650_519_PNG$"
                     ],
                     colors: ["#212121", "#5c7f67", "#7d5260"],
-                    inventory: [{ id: 20171, condition: "New", storage: "256GB", price: 1299, stock: 8 }],
-                    specifications: { "Display": "6.8-inch Dynamic AMOLED 2X", "Processor": "Snapdragon 8 Gen 3 for Galaxy", "Camera": "200MP + 50MP + 10MP + 12MP quad camera", "OS": "Android 14" }
+                    inventory: [
+                        { id: 20171, condition: "New", storage: "256GB", price: 1299, stock: 8 }
+                    ],
+                    specifications: {
+                        "Display": "6.8-inch Dynamic AMOLED 2X",
+                        "Processor": "Snapdragon 8 Gen 3 for Galaxy",
+                        "Camera": "200MP + 50MP + 10MP + 12MP quad camera",
+                        "OS": "Android 14"
+                    }
                 },
                 {
                     id: 2024,
@@ -650,14 +683,39 @@ const app = createApp({
                     description: "Premium mid-range smartphone with flagship features at an affordable price.",
                     images: [
                         "https://images.samsung.com/is/image/samsung/p6pim/levant/2403/gallery/levant-galaxy-a55-5g-sm-a556blbamea-thumb-539663290?$650_519_PNG$",
-                        "https://images.samsung.com/is/image/samsung/p6pim/levant/2403/gallery/levant-galaxy-a55-5g-sm-a556blbamea-thumb-539663290-2?$650_519_PNG$",
                         "https://images.samsung.com/is/image/samsung/p6pim/levant/2403/gallery/levant-galaxy-a55-5g-sm-a556blbamea-thumb-539663290-2?$650_519_PNG$"
                     ],
                     colors: ["#0a2540", "#f9f6f2"],
-                    inventory: [{ id: 20241, condition: "New", storage: "128GB", price: 449, stock: 12 }],
-                    specifications: { "Display": "6.6-inch Super AMOLED 120Hz", "Processor": "Exynos 1480", "Camera": "50MP triple camera with OIS", "OS": "Android 14" }
+                    inventory: [
+                        { id: 20241, condition: "New", storage: "128GB", price: 449, stock: 12 }
+                    ],
+                    specifications: {
+                        "Display": "6.6-inch Super AMOLED 120Hz",
+                        "Processor": "Exynos 1480",
+                        "Camera": "50MP triple camera with OIS",
+                        "OS": "Android 14"
+                    }
                 },
-
+                {
+                    id: 3001,
+                    name: "Pixel 8",
+                    brand: "Google",
+                    category: "Other Smartphones",
+                    description: "Google's flagship with advanced AI camera features and pure Android experience.",
+                    images: [
+                        "https://store.google.com/product/images/phone_pixel_8_front.png"
+                    ],
+                    colors: ["#1e3a8a", "#0f766e"],
+                    inventory: [
+                        { id: 30071, condition: "New", storage: "256GB", price: 799, stock: 5 }
+                    ],
+                    specifications: {
+                        "Display": "6.2-inch Actua display",
+                        "Processor": "Google Tensor G3",
+                        "Camera": "50MP wide + 12MP ultrawide",
+                        "OS": "Android 14"
+                    }
+                },
                 // OTHER SMARTPHONES
                 {
                     id: 3001,

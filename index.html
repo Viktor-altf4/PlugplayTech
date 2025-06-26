@@ -115,13 +115,13 @@
                         <div v-if="userId && recommendedProducts.length > 0" class="container mx-auto px-4">
                               <h2 class="text-3xl font-bold mb-8 text-gray-800 text-center section-title">Recommended For You</h2>
                               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                                   <div v-for="product in recommendedProducts" :key="product.id" class="bg-white border rounded-lg p-6 shadow hover:shadow-lg transition transform hover:-translate-y-1 relative product-card flex flex-col">
+0                                   <div v-for="product in recommendedProducts" :key="product.id" class="bg-white border rounded-lg p-6 shadow hover:shadow-lg transition transform hover:-translate-y-1 relative product-card">
                                         <button @click.stop="toggleFavorite(product.id)" class="absolute top-4 left-4 z-20 text-xl text-gray-400 hover:text-red-500 favorite-btn" :class="{ 'favorited': isFavorite(product.id) }">
                                             <i class="fas fa-heart"></i>
                                         </button>
                                         <div v-if="getMaxStock(product) === 0" class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">Out of Stock</div>
                                         <div v-else class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">In Stock</div>
-                                        <img :data-src="optimizeImage(product.images[0], 400)" :alt="product.name" class="w-full h-56 object-contain mb-6 lazy-img" :onerror="`this.onerror=null;this.src='https://placehold.co/400x400/e2e8f0/e2e8f0?text=Image+Not+Found';`">
+                                        <img :src="optimizeImage(product.images[0], 400)" :alt="product.name" class="w-full h-56 object-contain mb-6" :onerror="`this.onerror=null;this.src='https://placehold.co/400x400/e2e8f0/e2e8f0?text=Image+Not+Found';`">
                                         <h3 class="text-xl font-bold text-gray-800 mb-2">{{ product.name }}</h3>
                                         <p class="text-gray-600 text-sm mb-4 font-sans">{{ product.brand }}</p>
                                         <div class="mb-4 mt-auto"><span class="text-blue-600 font-bold text-lg">From MWK {{ calculateLocalizedPrice(getMinPrice(product)).toLocaleString() }}</span></div>
@@ -148,12 +148,26 @@
                              </div>
                               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                                    <div v-for="product in featuredProducts" :key="product.id" class="bg-white border rounded-lg p-6 shadow hover:shadow-lg transition transform hover:-translate-y-1 relative product-card">
-                                        <div v-if="getMaxStock(product) === 0" class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">Out of Stock</div>
-                                        <div v-else class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">In Stock</div>
-                                        <img :data-src="optimizeImage(product.images[0], 400)" :alt="product.name" class="w-full h-56 object-contain mb-6 lazy-img" :onerror="`this.onerror=null;this.src='https://placehold.co/400x400/e2e8f0/e2e8f0?text=Image+Not+Found';`">
+                                        <div class="flex justify-between items-center mb-4">
+                                            <button @click.stop="toggleFavorite(product.id)" class="text-xl text-gray-400 hover:text-red-500 favorite-btn" :class="{ 'favorited': isFavorite(product.id) }">
+                                                <i class="fas fa-heart"></i>
+                                            </button>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" v-model="selectedForComparison" :value="product.id" class="mr-2">
+                                                <span class="text-sm text-gray-600 font-sans">Compare</span>
+                                            </div>
+                                        </div>
+                                        <!-- Move the stock badge below the image and center it -->
+                                        <img :src="optimizeImage(product.images[0], 400)" :alt="product.name" class="w-full h-56 object-contain mb-4" :onerror="`this.onerror=null;this.src='https://placehold.co/400x400/e2e8f0/e2e8f0?text=Image+Not+Found';`">
+                                        <div class="flex justify-center mb-2">
+                                            <div v-if="getMaxStock(product) === 0" class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-sans">Out of Stock</div>
+                                            <div v-else class="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-sans">In Stock</div>
+                                        </div>
                                         <h3 class="text-xl font-bold text-gray-800 mb-2">{{ product.name }}</h3>
                                         <p class="text-gray-600 text-sm mb-4 font-sans">{{ product.brand }}</p>
-                                        <div class="mb-4"><span class="text-blue-600 font-bold text-lg">From MWK {{ calculateLocalizedPrice(getMinPrice(product)).toLocaleString() }}</span></div>
+                                        <div class="mb-4">
+                                            <span class="text-blue-600 font-bold text-lg">From MWK {{ calculateLocalizedPrice(getMinPrice(product)).toLocaleString() }}</span>
+                                        </div>
                                         <button @click="viewProduct(product)" class="mt-2 w-full bg-blue-600 text-white px-4 py-3 rounded hover:bg-blue-700 transition flex items-center justify-center font-semibold font-sans">View Details <i class="fas fa-chevron-right ml-2 text-xs"></i></button>
                                    </div>
                               </div>
@@ -234,25 +248,25 @@
 
                                 <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                      <div v-for="product in filteredProducts" :key="product.id" class="bg-white border rounded-lg p-6 shadow hover:shadow-lg transition transform hover:-translate-y-1 relative product-card">
-                                         <button @click.stop="toggleFavorite(product.id)" class="absolute top-4 left-4 z-20 text-xl text-gray-400 hover:text-red-500 favorite-btn" :class="{ 'favorited': isFavorite(product.id) }">
-                                             <i class="fas fa-heart"></i>
-                                         </button>
-                                         <div v-if="getMaxStock(product) === 0" class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">Out of Stock</div>
-                                         <div v-else class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">In Stock</div>
-
-                                         <div class="flex items-center mb-4">
-                                             <input type="checkbox" v-model="selectedForComparison" :value="product.id" class="mr-2">
-                                             <span class="text-sm text-gray-600 font-sans">Compare</span>
-                                         </div>
-
-                                         <img :data-src="optimizeImage(product.images[0], 400)" :alt="product.name" class="w-full h-56 object-contain mb-6 lazy-img" :onerror="`this.onerror=null;this.src='https://placehold.co/400x400/e2e8f0/e2e8f0?text=Image+Not+Found';`">
-                                         <h3 class="text-xl font-bold text-gray-800 mb-2">{{ product.name }}</h3>
-                                         <p class="text-gray-600 text-sm mb-4 font-sans">{{ product.brand }}</p>
-                                         <div class="mb-4">
-                                             <span class="text-blue-600 font-bold text-lg">From MWK {{ calculateLocalizedPrice(getMinPrice(product)).toLocaleString() }}</span>
-                                         </div>
-                                         <button @click="viewProduct(product)" class="mt-2 w-full bg-blue-600 text-white px-4 py-3 rounded hover:bg-blue-700 transition flex items-center justify-center font-semibold font-sans">View Details <i class="fas fa-chevron-right ml-2 text-xs"></i></button>
-                                     </div>
+                                        <div class="flex justify-between items-center mb-4">
+                                            <button @click.stop="toggleFavorite(product.id)" class="text-xl text-gray-400 hover:text-red-500 favorite-btn" :class="{ 'favorited': isFavorite(product.id) }">
+                                                <i class="fas fa-heart"></i>
+                                            </button>
+                                            <div class="flex items-center">
+                                                <input type="checkbox" v-model="selectedForComparison" :value="product.id" class="mr-2">
+                                                <span class="text-sm text-gray-600 font-sans">Compare</span>
+                                            </div>
+                                        </div>
+                                        <div v-if="getMaxStock(product) === 0" class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">Out of Stock</div>
+                                        <div v-else class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs z-10 font-sans">In Stock</div>
+                                        <img :src="optimizeImage(product.images[0], 400)" :alt="product.name" class="w-full h-56 object-contain mb-6" :onerror="`this.onerror=null;this.src='https://placehold.co/400x400/e2e8f0/e2e8f0?text=Image+Not+Found';`">
+                                        <h3 class="text-xl font-bold text-gray-800 mb-2">{{ product.name }}</h3>
+                                        <p class="text-gray-600 text-sm mb-4 font-sans">{{ product.brand }}</p>
+                                        <div class="mb-4">
+                                            <span class="text-blue-600 font-bold text-lg">From MWK {{ calculateLocalizedPrice(getMinPrice(product)).toLocaleString() }}</span>
+                                        </div>
+                                        <button @click="viewProduct(product)" class="mt-2 w-full bg-blue-600 text-white px-4 py-3 rounded hover:bg-blue-700 transition flex items-center justify-center font-semibold font-sans">View Details <i class="fas fa-chevron-right ml-2 text-xs"></i></button>
+                                    </div>
                                  </div>
                              </div>
                          </div>
@@ -276,9 +290,9 @@
                                              <div v-for="(image, index) in selectedProduct.images"
                                                    :key="index"
                                                    class="swiper-slide flex items-center justify-center">
-                                                 <img :data-src="optimizeImage(image, 600)"
+                                                 <img :src="optimizeImage(image, 600)"
                                                        :alt="`${selectedProduct.name} - Image ${index+1}`"
-                                                      class="max-h-[400px] object-contain lazy-img"
+                                                      class="max-h-[400px] object-contain"
                                                       :onerror="`this.onerror=null;this.src='https://placehold.co/600x600/e2e8f0/e2e8f0?text=Image+Not+Found';`">
                                              </div>
                                          </div>
